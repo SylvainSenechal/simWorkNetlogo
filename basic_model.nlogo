@@ -1,4 +1,4 @@
-__includes["code/setup.nls" ]
+__includes["code/setup.nls" "code/go.nls" ]
 
 to setup
   clear-all
@@ -57,7 +57,6 @@ to setup_sliders_globals
   set time_window time_window_
 
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 290

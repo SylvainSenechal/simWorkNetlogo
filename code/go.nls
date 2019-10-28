@@ -1,0 +1,116 @@
+;; =================================================================
+;; GO PROCEDURES
+;; =================================================================
+
+
+; Run a sole simulation. Keep calling it if you want several tick to be run.
+to go_simulation
+  
+  ask persons[
+    go_person 
+  ]
+  ask companies[
+    go_company
+  ]  
+ 
+ 
+  tick
+end
+
+
+; Dynamic simulation of a single agent person. -----------------------------------------------------------------------
+; It will first try to find a job.
+to go_person
+  
+  if not haveJob [                             ; if the agent person has no job
+    
+    
+    
+    ask matching matchingAgentWhoNumber [      ; it asks for one to the matching agent
+      ifelse (Activate_optimized_matching_ = true)[ ; HERE IF WE USE OPTIMIZED MATCHING
+        if (seekJob?) [
+          if not member? ([who] of myself) seekP [ ; which check first if the agent person is already in its list
+            set seekP lput ([who] of myself) seekP ; and eventually add it to it.
+          ]  
+        ]
+      ]
+      [
+        if not member? ([who] of myself) seekP [ ; which check first if the agent person is already in its list
+          set seekP lput ([who] of myself) seekP ; and eventually add it to it.
+        ] 
+      ] 
+    ]
+    set time_unemployed time_unemployed + 1    ; At each tick we keep track of the time the agent person was unemployed
+  ]
+  
+  
+  
+   end
+
+
+; Dynamic simulation of a single agent company. -----------------------------------------------------------------------
+; It will either try to find a job, or try to fire its employee.
+to go_company
+  
+  ifelse not haveEmployee [                    ; If the agent company has no job
+    ask matching matchingAgentWhoNumber [      ; it asks for one to the matching agent,
+      if not member? ([who] of myself) seekC [ ; which check first if the agent person is already in its list
+        set seekC lput ([who] of myself) seekC ; and eventually add it to it.
+      ]
+    ]
+  ]
+  [                                                   ; if the agent company already has an amployee it will verify its productivity
+    let bad_productivity ((productivity skills ([skills] of employee)) < firing_quality_threshold) ; and fire him if it is unsufficent
+    let bad_luck (random-float 1 < unexpected_firing) ; and has also a given chance to unexpectedly fire it.
+    if (bad_productivity or bad_luck) [
+      fire_employee(employee)
+    ]
+  ]
+  
+  
+  
+end
+
+; si la PERSONS cherche un job ou pas
+to-report seekJob?
+  let rand (random-float 1)
+  ifelse (rand < ( 1 / (1 - s_)))[ ; une chance de 1/(1 - s) de ne pas chercher de job à ce tour ci
+      report false  ; non , on ne cherche pas de job
+  ]
+  [
+    report true ; oui , on cherche un job
+  ] 
+end
+
+
+; Compute the productivity of an agent person (is usually called by an agent company)
+to-report productivity [skills1 skills2]
+  
+  
+end
+
+; Fire an employee (is usually called by an agent company)
+to fire_employee [the_employee]
+  
+  set haveEmployee False 
+  set employee nobody 
+  
+  set color grey   ; HERE CHANGE OF COLOR
+  ask the_employee [ 
+    set haveJob False
+    set employer nobody
+    set color white     ; HERE CHANGE OF COLOR
+    ask my-links [die]  ; HERE TO DESTROY A LINK BETWEEN COMPAGY AND PERSON
+  ]
+end
+
+
+
+
+
+
+
+
+
+
+
