@@ -71,6 +71,76 @@ to go_company
   
 end
 
+; Dynamic simulation of a single agent matching. -----------------------------------------------------------------------
+; It will try to match a restricted number of agent person and agent company.
+to go_matching
+  
+  ; At the begining of this tick, the statistic are reset to zero.
+  set people_matched_this_turn 0
+  set structural_unemployement 0
+  set frictional_unemployement_rate 0
+  set frictional_unemployement_time 0
+  
+  
+  ;HERE THE APPENDICE A
+  let n_treated 0
+  ifelse (Activate_appendice_)[
+    set n_treated (min (List (length seekP) (length seekC) M_value)) ; n_treated = la taille minimum entre seekP et seekC ;;;;;;;;;;;;;;;;; ICI QUE L'ON MODIFIE LE NOMBRE DE COUPLE DE MATCHING
+  ]
+  [
+    set n_treated (min (List (length seekP) (length seekC) n_match)) ; It first determines the exact number (n_treated) of agents processed
+  ]                                                                 ;       (it is the minimum number between the matching agent capacity (n_match) and the lists of candidats)
+  let unemployed_treated n-of n_treated (shuffle seekP)            ; then it selects some agents in each lists (seekP and seekC)
+  let recruitors_treated n-of n_treated (shuffle seekC)            ; and makes sure that they are ordered randomly (shuffle)
+  
+  foreach (n-values n_treated [ n -> n ] )[x ->                               ; Exactly "n_treated" pairs will now we tested.
+    
+    let a_person_number (item x unemployed_treated)                ; To avoid unecessary (and onerous) manipulation of agent list we refer to them through their number
+    let a_company_number (item x recruitors_treated) 
+    let a_person (person a_person_number)                          ; and we directly use it to manipulate the agent person and the agent company.
+    let a_company (company a_company_number) 
+    
+    
+    let simi_person 0
+    let simi_company 0
+    ; HERE IF WE USE OPTIMIZED MATCHING
+    ;ifelse (Activate_optimized_matching_ = true)[
+      ;set simi_person (optimized_similarity_person_to_company a_person a_company)  ; The similarity between an agent person and an agent company is computed
+      ;set simi_company (optimized_similarity_company_to_person a_company a_person) ; as well as between a company and a person 
+    ;]
+    ;[
+      set simi_person (similarity_person_to_company a_person a_company)  ; The similarity between an agent person and an agent company is computed
+      set simi_company (similarity_company_to_person a_company a_person) ; as well as between a company and a person 
+    ;]
+    
+    
+    let close_enough ((abs (simi_person - simi_company)) <= exceptional_matching)      ; Then it assess that their similiratiies are on the same scale
+    let good_enough ( (simi_person + simi_company) / 2 >= matching_quality_threshold ) ; and if they are similar enough to be matched
+    
+    ifelse (close_enough and good_enough) [                             ; If the two conditions above are met, the matching occurs.
+      ask a_company [hire_employee a_person]                            ;    The agent company employ the agent person
+      set seekP (remove-item (position a_person_number seekP) seekP)    ;    and both agent are withdraw from the lists
+      set seekC (remove-item (position a_company_number seekC) seekC) 
+    ]
+    [                                                                   ; Otherwise, the matching fail
+      set structural_unemployement structural_unemployement + 1         ;   in this case we update the "structural_unemployement" counter
+    ]
+  ]
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ; si la PERSONS cherche un job ou pas
 to-report seekJob?
   let rand (random-float 1)
@@ -89,20 +159,36 @@ to-report productivity [skills1 skills2]
   
 end
 
-; Fire an employee (is usually called by an agent company)
-to fire_employee [the_employee]
-  
-  set haveEmployee False 
-  set employee nobody 
-  
-  set color grey   ; HERE CHANGE OF COLOR
-  ask the_employee [ 
-    set haveJob False
-    set employer nobody
-    set color white     ; HERE CHANGE OF COLOR
-    ask my-links [die]  ; HERE TO DESTROY A LINK BETWEEN COMPAGY AND PERSON
+to-report M_value
+  go_globals
+  set vacant_jobs count companies with [not haveEmployee] 
+  let U count persons with [not haveJob]  
+  ifelse (vacant_jobs  != 0)[
+    set M   vacant_jobs  * (1 - e ^ (- 1 * s_ * U / vacant_jobs ))
   ]
+  [
+    set M 10
+  ]
+  report M
 end
+
+
+; calcul la similarité d'une personne pour une personne
+to-report similarity_person_to_company[a_person a_company]
+  
+  
+end
+
+to go_globals
+end
+
+
+to-report similarity_company_to_person[a_company a_person]
+
+end
+  
+
+
 
 
 
