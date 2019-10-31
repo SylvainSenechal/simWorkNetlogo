@@ -7,11 +7,14 @@
 to go_simulation
   
   ask persons[
-    go_person 
+    init_person 
   ]
   ask companies[
-    go_company
+    init_company
   ]  
+  ask matchings [
+    init_matching
+  ]
  
  
   tick
@@ -20,7 +23,7 @@ end
 
 ; Dynamic simulation of a single agent person. -----------------------------------------------------------------------
 ; It will first try to find a job.
-to go_person
+to init_person
   
   if not haveJob [                             ; if the agent person has no job
     
@@ -50,7 +53,7 @@ to go_person
 
 ; Dynamic simulation of a single agent company. -----------------------------------------------------------------------
 ; It will either try to find a job, or try to fire its employee.
-to go_company
+to init_company
   
   ifelse not haveEmployee [                    ; If the agent company has no job
     ask matching matchingAgentWhoNumber [      ; it asks for one to the matching agent,
@@ -73,7 +76,7 @@ end
 
 ; Dynamic simulation of a single agent matching. -----------------------------------------------------------------------
 ; It will try to match a restricted number of agent person and agent company.
-to go_matching
+to init_matching
   
   ; At the begining of this tick, the statistic are reset to zero.
   set people_matched_this_turn 0
