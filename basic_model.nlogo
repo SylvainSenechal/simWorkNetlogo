@@ -1,4 +1,4 @@
-__includes["code/setup.nls" "code/go.nls" "code/affichage.nls" ]
+__includes["code/setup.nls" "code/go.nls" "code/affichage.nls" "measures.nls" ]
 
 to setup
   clear-all
@@ -7,7 +7,7 @@ to setup
   setup_simulation           ; Initialize the simulation variable
 
 
-    ;set Activate_optimized_matching_ false
+    set Activate_optimized_matching_ false
     set Activate_appendice_ false
     set Activate_resignation_ false
     set Optimized_resignation_ false

@@ -52,7 +52,7 @@ globals[
  firing_quality_threshold          ; Lower bound on the productivity for an employee not be fired
  max_productivity_fluctuation      ; Random deviation to the productivity of an employee
  distMax                           ; Maximum distance in the simulation's world
- matchingAgentWhoNumber            ; Identifier of the agent MAYCHING
+ matchingAgentWhoNumber            ; Identifier of the agent MATCHING
  
  Person_Number                     ; Number of agents PERSON in a simulation
  Compagny_Number                   ; Number of agents COMPANY in a simulation
@@ -112,10 +112,10 @@ globals[
   happiness_worker_array
   happiness_companies_array
   
-  unemployement_array_beveridge  
-  long_unemployement_array_beveridge  
-  happiness_worker_array_beveridge    
-  happiness_companies_array_beveridge
+  ;unemployement_array_beveridge  
+  ;long_unemployement_array_beveridge  
+  ;happiness_worker_array_beveridge    
+  ;happiness_companies_array_beveridge
   
  unemployement_array_parameter
  long_unemployement_array_parameter
@@ -138,8 +138,7 @@ globals[
   unexpected_resignation_
   reconvertion_person_rate_
   reconvertion_company_rate_
-  
-  
+
   ; extention
   
   Activate_optimized_matching_ ; boolean if we activate the optimzed matching
@@ -148,6 +147,9 @@ globals[
   Activate_resignation_
   Optimized_resignation_
   Activate_perspective_
+  
+  
+  
   
 ]
 
@@ -174,7 +176,7 @@ to setup_simulation
   reset-ticks 
 end 
 
-; Same function witthout the globals settings
+; Same function without the globals settings
 to setup_simulation_without_globals
   
   random-seed Rseed  

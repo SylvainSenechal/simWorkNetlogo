@@ -16,6 +16,9 @@ to go_simulation
     init_matching
   ]
  
+  init_links
+  init_color
+  go_globals
  
   tick
 end
@@ -132,6 +135,54 @@ to init_matching
 end
 
 
+; Updates the statistic of the simulation
+to go_globals
+  
+  let working_force count persons with [haveJob]                                         ; The number of employed agents person
+  set unemployment_level count persons with [not haveJob]                                ; The number of unemployed agents person 
+  set labor_force (working_force + unemployment_level)                                   ; The number of agents person having or looking for a job
+  if labor_force != 0[
+    set unemployement_rate ( unemployment_level /   labor_force)                         ; The proportion of non-working agents person
+  ]
+  set vacant_jobs count companies with [not haveEmployee]                                ; The number of vacant jobs
+  if labor_force != 0 [
+    set vacancy_rate (vacant_jobs / labor_force)                                         ; The proportion of unoccupied jobs 
+  ] 
+  if Person_Number != 0 [
+    set participation_rate ( labor_force / Person_Number)                                ; The proportion of people engaged in a job or in job seeking
+  ]
+  set natural_unemployement ( frictional_unemployement_rate  + structural_unemployement) ; Global unemployement level 
+  
+                                                                                         ; Here we store the unemployed rate and the vacancy rate over several ticks in a "sliding window" fashion
+  ifelse (time_window <= 0 or ticks < time_window) [                                     ; When not enough values are strored, it keep storing them
+    set unemployement_rate_list lput unemployement_rate unemployement_rate_list
+    set vacancy_rate_list lput vacancy_rate vacancy_rate_list
+  ]
+  [                                                                                      ; But when enough of them are present, the first one progressively replace by the previous while new values arrive
+    set unemployement_rate_list lput unemployement_rate but-first unemployement_rate_list
+    set vacancy_rate_list lput vacancy_rate but-first  vacancy_rate_list
+  ]
+
+;; keep the 20 last measures
+  ifelse (ticks > 20) [
+    set unemployement_array  lput (unemployment_level / Labor_force) but-first unemployement_array
+    set long_unemployement_array lput  ((count persons with [ time_unemployed >= long_time_unemployed ] ) / Labor_force) but-first long_unemployement_array
+    ;set happiness_worker_array lput persons_happiness but-first happiness_worker_array
+    ;set happiness_companies_array lput companies_happiness but-first happiness_companies_array
+  ]
+  
+  [
+  
+  ;; for the differents plots
+ set unemployement_array  lput ( unemployment_level / Labor_force) unemployement_array
+ set long_unemployement_array lput  ((count persons with [ time_unemployed >= long_time_unemployed ] ) / Labor_force)  long_unemployement_array
+ ;set happiness_worker_array lput persons_happiness happiness_worker_array
+ ;set happiness_companies_array lput companies_happiness happiness_companies_array
+  
+  ]
+  
+end
+
 
 
 
@@ -182,8 +233,7 @@ to-report similarity_person_to_company[a_person a_company]
   
 end
 
-to go_globals
-end
+
 
 
 to-report similarity_company_to_person[a_company a_person]
