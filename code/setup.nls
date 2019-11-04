@@ -54,6 +54,7 @@ globals[
  distMax                           ; Maximum distance in the simulation's world
  matchingAgentWhoNumber            ; Identifier of the agent MATCHING
  indicator
+ 
   
  Person_Number                     ; Number of agents PERSON in a simulation
  Compagny_Number                   ; Number of agents COMPANY in a simulation
@@ -62,19 +63,25 @@ globals[
   ; Statistic variables:
   
   labor_force                      ; The number of agents person having or looking for a job
-  unemployment_level               ; The number of unemployed agents person 
-  unemployement_rate               ; The proportion of non-working agents person
-  vacant_jobs                      ; The number of unoccupied jobs
+  unemployment_level               ; The number of unemployed agents person U
+  unemployment_rate               ; The proportion of non-working agents person
+  vacant_jobs                      ; The number of unoccupied jobs V
   vacancy_rate                     ; The proportion of unoccupied jobs
   participation_rate               ; The proportion of people engaged in a job or in job seeking
   frictional_unemployement_time    ; Cumulated delay before finding a job for those actively seeking one
   frictional_unemployement_rate    ; Average delay to find a job when looking for one
-  people_matched_this_turn         ; Number of agents person which find a job this turn
+  
+  people_matched_this_turn         ; Number of agents person (were employed+unemployed) which find a job this turn
+  unemployed_matched_this_turn     ; Number of unemployed person which find a job this turn
+  employed_fired_this_turn         ; Number of employed person which were fired this turn 
+  
   structural_unemployement         ; Number of mismatch between potential employees and potentials employer each turn
   natural_unemployement            ; Global unemployement level 
-  count_unemployed_total           ; Number total of unemployed agents person
+  ;count_unemployed_total           ; Number total of unemployed agents person
   unemployement_rate_list          ; unemployement_rate values over time
   vacancy_rate_list                ; vacancy_rate over time
+  hiring_rate                      ; hiring_rate over time
+  firing_rate                      ; firing_rate over time
     
   time_window                      ; Size of the "slidding window" used by the moving mean(s)
  
@@ -83,6 +90,7 @@ globals[
  
   n_sub_simu                       ; Number of simulation averaged to get one statistic value
   n_ticks_max                      ; Maximum number of tick in a simulation
+  
   epsilon                          ; Maximum deviation from the moving mean(s) allowed
   VacancyRateList_simulations      ; Final vacancy_rate values over simulations  
   UnemployedRateList_simulations   ; Final unemployement_rate values over simulations  
@@ -179,7 +187,7 @@ end
 
 ; Same function without the globals settings
 to setup_simulation_without_globals
-  
+  ;; TODO clean affichage (sauf bev)
   random-seed Rseed 
   
   setup_persons
@@ -189,6 +197,8 @@ to setup_simulation_without_globals
   
   plot_beveridge
   reset-ticks 
+  
+  ;;add button start_next to cumulate the simulation and the go 
 end 
 
 ; Initialize the agents PERSON
@@ -263,7 +273,7 @@ to setup_globals
   set unemployment_level count persons with [not haveJob]                               ; The number of unemployed agents person 
   
   if Person_Number != 0 [
-    set unemployement_rate (unemployment_level /   Person_Number)                       ; The proportion of non-working agents person
+    set unemployment_rate  (unemployment_level /   Person_Number)                       ; The proportion of non-working agents person
     ]
   set vacant_jobs count companies with[not haveEmployee]                                ; The number of vacant jobs
   if labor_force != 0 [
@@ -278,8 +288,8 @@ to setup_globals
   set structural_unemployement 0                                                        ; Number of mismatch between potential employees and potential employers each turn
   set natural_unemployement 0                                                           ; Global unemployement level 
   
-  set count_unemployed_total 0                                                          ; Number total of unemployed agents person
-  
+  ;set count_unemployed_total 0                                                          ; Number total of unemployed agents person
+  set n_ticks_max  max_tick                                                             ; Number max of ticks in one simulation
   set people_matched_this_turn 0                                                        ; Number of agents person which find a job this turn
  
   set unemployement_rate_list []                                                        ; Here we store the unemployed rate and the vacancy rate 

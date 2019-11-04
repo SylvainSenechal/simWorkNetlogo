@@ -75,8 +75,7 @@ to plot_beveridge
 
     if ( vacancy_rate_list != 0 and unemployement_rate_list != 0) [
       if (length  vacancy_rate_list > 0 and length unemployement_rate_list > 0) [
-        show last unemployement_rate_list
-        show last vacancy_rate_list
+
         plotxy (last unemployement_rate_list) (last  vacancy_rate_list)
         show "je plot"
         set indicator 0
@@ -409,7 +408,7 @@ MONITOR
 1061
 291
 unemployement_rate
-unemployement_rate
+unemployment_rate
 17
 1
 11
@@ -423,7 +422,7 @@ time_window_
 time_window_
 0
 50
-20.0
+50.0
 1
 1
 NIL
@@ -453,15 +452,15 @@ Rates
 NIL
 NIL
 0.0
-10.0
+1.0
 0.0
 1.0
 true
 true
 "" ""
 PENS
-"Unemployed nb" 1.0 0 -11783835 true "" "plot unemployment_level"
-"Vacancy nb" 1.0 0 -2674135 true "" "plot vacant_jobs "
+"unemployment rate " 1.0 0 -11783835 true "" "plot unemployment_rate "
+"Vacancy rate" 1.0 0 -2674135 true "" "plot vacancy_rate"
 
 PLOT
 952
@@ -514,6 +513,35 @@ NIL
 NIL
 NIL
 1
+
+INPUTBOX
+256
+618
+405
+678
+max_tick
+0.0
+1
+0
+Number
+
+PLOT
+1177
+304
+1377
+454
+HF rates
+NIL
+NIL
+0.0
+1.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"Hiring Rate" 1.0 0 -14439633 true "" "plot hiring_rate\n    "
 
 @#$#@#$#@
 ## WHAT IS IT?

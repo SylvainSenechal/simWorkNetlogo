@@ -9,6 +9,7 @@ to go_simulation
   ask persons [
     go_one_person 
   ]
+  set employed_fired_this_turn 0
   ask companies [
     go_one_company
   ]  
@@ -77,6 +78,7 @@ to go_one_matching
   
   ; At the begining of this tick, the statistic are reset to zero.
   set people_matched_this_turn 0
+  set unemployed_matched_this_turn 0
   set structural_unemployement 0
   set frictional_unemployement_rate 0
   set frictional_unemployement_time 0
@@ -137,7 +139,7 @@ to go_globals
   set unemployment_level count persons with [not haveJob]                                ; The number of unemployed agents person 
   set labor_force (working_force + unemployment_level)                                   ; The number of agents person having or looking for a job
   if labor_force != 0[
-    set unemployement_rate ( unemployment_level /   labor_force)                         ; The proportion of non-working agents person
+    set unemployment_rate  ( unemployment_level /   labor_force )                         ; The proportion of non-working agents person
   ]
   set vacant_jobs count companies with [not haveEmployee]                                ; The number of vacant jobs
   if labor_force != 0 [
@@ -147,17 +149,23 @@ to go_globals
     set participation_rate ( labor_force / Person_Number)                                ; The proportion of people engaged in a job or in job seeking
   ]
   set natural_unemployement ( frictional_unemployement_rate  + structural_unemployement) ; Global unemployement level 
-  
-                                                                                         ; Here we store the unemployed rate and the vacancy rate over several ticks in a "sliding window" fashion
+  if unemployment_level != 0 [
+    set hiring_rate (unemployed_matched_this_turn / unemployment_level)
+  ] 
+    
+  if labor_force != 0 [
+  set firing_rate (employed_fired_this_turn /(labor_force - unemployment_level) )
+  ]                                                                                       ; Here we store the unemployed rate and the vacancy rate over several ticks in a "sliding window" fashion
   ifelse (time_window <= 0 or ticks < time_window) [                                     ; When not enough values are strored, it keep storing them
-    set unemployement_rate_list lput unemployement_rate unemployement_rate_list
+    set unemployement_rate_list lput unemployment_rate  unemployement_rate_list
     set vacancy_rate_list lput vacancy_rate vacancy_rate_list
   ]
   [                                                                                      ; But when enough of them are present, the first one progressively replace by the previous while new values arrive
-    set unemployement_rate_list lput unemployement_rate but-first unemployement_rate_list
+    set unemployement_rate_list lput unemployment_rate  but-first unemployement_rate_list
     
     set vacancy_rate_list lput vacancy_rate but-first  vacancy_rate_list
   ]
+  
 
 ;; keep the 20 last measures
   ifelse (ticks > 20) [
@@ -177,6 +185,30 @@ to go_globals
  ;set happiness_companies_array lput companies_happiness happiness_companies_array
   
   ]
+  if converge? [
+   ;; TODO same than too_long ? (ie print bev or not ?)
+  ]
+  
+  if too_long? [
+   stop
+    ;; TODO save for bev and plot bev
+   ;; TODO add switch auto_iterate, if true, launch next simulation
+    
+  ]
+  
+end
+
+
+to-report converge?
+  report False
+end
+
+to-report too_long?
+ 
+ if (ticks >= n_ticks_max) [
+    report True
+  ]
+  report False
   
 end
 

@@ -1,6 +1,6 @@
 ; Fire an employee (is usually called by an agent company)
 to fire_employee [the_employee]
-  
+  set employed_fired_this_turn (employed_fired_this_turn + 1 )
   set haveEmployee False 
   set employee nobody 
   
@@ -19,6 +19,7 @@ end
 ; comment engager un employé
 to hire_employee [the_person]  
   set people_matched_this_turn (people_matched_this_turn + 1)
+  ; TODO increase unemployed_matched_this_turn if person is unemployed before hire
   set haveEmployee True
   set employee the_person
   set time_unemployee 0 ;
