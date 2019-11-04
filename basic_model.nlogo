@@ -1,4 +1,4 @@
-__includes["code/setup.nls" "code/go.nls" "code/affichage.nls" "measures.nls" ]
+__includes["code/setup.nls" "code/go.nls" "code/affichage.nls" "code/measures.nls" ]
 
 to setup
   clear-all
@@ -57,6 +57,17 @@ to setup_sliders_globals
   set time_window time_window_
 
 end
+
+to plot_beveridge
+  if (VacancyRateList_simulations != 0 and UnemployedRateList_simulations != 0) [
+    if (length VacancyRateList_simulations > 0 and length UnemployedRateList_simulations > 0) [
+      plotxy (last UnemployedRateList_simulations) (last VacancyRateList_simulations)
+    ]
+  ]
+end
+
+
+
 @#$#@#$#@
 GRAPHICS-WINDOW
 290
@@ -304,6 +315,24 @@ unexpected_firing_
 1
 NIL
 HORIZONTAL
+
+PLOT
+879
+26
+1166
+203
+Beveridge curve
+NIL
+NIL
+0.0
+1.0
+0.0
+1.0
+true
+true
+"" ""
+PENS
+"BC" 10.0 2 -13345367 true "" "plot_beveridge"
 
 SLIDER
 6

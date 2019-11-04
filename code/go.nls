@@ -207,11 +207,7 @@ to-report seekJob?
 end
 
 
-; Compute the productivity of an agent person (is usually called by an agent company)
-to-report productivity [skills1 skills2]
-  
-  
-end
+;
 
 to-report M_value
   go_globals
@@ -227,18 +223,12 @@ to-report M_value
 end
 
 
-; calcul la similarité d'une personne pour une personne
-to-report similarity_person_to_company[a_person a_company]
-  
-  
-end
 
 
 
 
-to-report similarity_company_to_person[a_company a_person]
 
-end
+
   
 
 
