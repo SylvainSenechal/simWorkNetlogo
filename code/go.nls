@@ -6,10 +6,10 @@
 ; Run a sole simulation. Keep calling it if you want several tick to be run.
 to go_simulation
   
-  ask persons[
+  ask persons [
     init_person 
   ]
-  ask companies[
+  ask companies [
     init_company
   ]  
   ask matchings [
@@ -21,6 +21,7 @@ to go_simulation
   go_globals
  
   tick
+  
 end
 
 
@@ -29,8 +30,6 @@ end
 to init_person
   
   if not haveJob [                             ; if the agent person has no job
-    
-    
     
     ask matching matchingAgentWhoNumber [      ; it asks for one to the matching agent
       ifelse (Activate_optimized_matching_ = true)[ ; HERE IF WE USE OPTIMIZED MATCHING
@@ -49,9 +48,7 @@ to init_person
     set time_unemployed time_unemployed + 1    ; At each tick we keep track of the time the agent person was unemployed
   ]
   
-  
-  
-   end
+end
 
 
 ; Dynamic simulation of a single agent company. -----------------------------------------------------------------------
@@ -72,8 +69,6 @@ to init_company
       fire_employee(employee)
     ]
   ]
-  
-  
   
 end
 
@@ -132,6 +127,7 @@ to init_matching
       set structural_unemployement structural_unemployement + 1         ;   in this case we update the "structural_unemployement" counter
     ]
   ]
+  
 end
 
 
@@ -183,18 +179,6 @@ to go_globals
   
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
 ; si la PERSONS cherche un job ou pas
 to-report seekJob?
   let rand (random-float 1)
@@ -206,9 +190,7 @@ to-report seekJob?
   ] 
 end
 
-
 ;
-
 to-report M_value
   go_globals
   set vacant_jobs count companies with [not haveEmployee] 
@@ -221,25 +203,4 @@ to-report M_value
   ]
   report M
 end
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
 
