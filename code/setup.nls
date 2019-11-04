@@ -53,7 +53,8 @@ globals[
  max_productivity_fluctuation      ; Random deviation to the productivity of an employee
  distMax                           ; Maximum distance in the simulation's world
  matchingAgentWhoNumber            ; Identifier of the agent MATCHING
- 
+ indicator
+  
  Person_Number                     ; Number of agents PERSON in a simulation
  Compagny_Number                   ; Number of agents COMPANY in a simulation
  Rseed                             ; Random seed used by the simulation
@@ -179,11 +180,14 @@ end
 ; Same function without the globals settings
 to setup_simulation_without_globals
   
-  random-seed Rseed  
+  random-seed Rseed 
+  
   setup_persons
   setup_companies
   setup_matching
+  show unemployement_rate_list
   
+  plot_beveridge
   reset-ticks 
 end 
 
@@ -280,13 +284,13 @@ to setup_globals
  
   set unemployement_rate_list []                                                        ; Here we store the unemployed rate and the vacancy rate 
   set vacancy_rate_list []                                                              ; over several ticks in a "sliding window" fashion  
-  
-  
+  ;setup_params_bev
+  set indicator 0 
   set number_array_max  20 ;; how many value we stock in arrays
- set unemployement_array  []
- set long_unemployement_array []
- set happiness_worker_array []
- set happiness_companies_array []
+  set unemployement_array  []
+  set long_unemployement_array []
+  set happiness_worker_array []
+  set happiness_companies_array []
   
 end
 
@@ -310,13 +314,4 @@ to setup_salary
   let random_variation (random salaryMaxFluctu)
   set salary (salaryMean + random_variation)
 end
-
-
-
-
-
-
-
-
-
 

@@ -155,6 +155,7 @@ to go_globals
   ]
   [                                                                                      ; But when enough of them are present, the first one progressively replace by the previous while new values arrive
     set unemployement_rate_list lput unemployement_rate but-first unemployement_rate_list
+    
     set vacancy_rate_list lput vacancy_rate but-first  vacancy_rate_list
   ]
 
@@ -165,6 +166,7 @@ to go_globals
     ;set happiness_worker_array lput persons_happiness but-first happiness_worker_array
     ;set happiness_companies_array lput companies_happiness but-first happiness_companies_array
   ]
+  
   
   [
   

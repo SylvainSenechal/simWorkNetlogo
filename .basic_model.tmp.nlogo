@@ -76,7 +76,7 @@ to plot_beveridge
     if ( vacancy_rate_list != 0 and unemployement_rate_list != 0) [
       if (length  vacancy_rate_list > 0 and length unemployement_rate_list > 0) [
         show last unemployement_rate_list
-        show last vacancy_rate_list
+
         plotxy (last unemployement_rate_list) (last  vacancy_rate_list)
         show "je plot"
         set indicator 0
