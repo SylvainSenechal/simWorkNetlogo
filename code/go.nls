@@ -7,13 +7,13 @@
 to go_simulation
   
   ask persons [
-    init_person 
+    go_one_person 
   ]
   ask companies [
-    init_company
+    go_one_company
   ]  
   ask matchings [
-    init_matching
+    go_one_matching
   ]
  
   init_links
@@ -27,12 +27,11 @@ end
 
 ; Dynamic simulation of a single agent person. -----------------------------------------------------------------------
 ; It will first try to find a job.
-to init_person
+to go_one_person
   
   if not haveJob [                             ; if the agent person has no job
-    
     ask matching matchingAgentWhoNumber [      ; it asks for one to the matching agent
-      ifelse (Activate_optimized_matching_ = true)[ ; HERE IF WE USE OPTIMIZED MATCHING
+      ifelse (Activate_optimized_matching_ = true) [ ; HERE IF WE USE OPTIMIZED MATCHING
         if (seekJob?) [
           if not member? ([who] of myself) seekP [ ; which check first if the agent person is already in its list
             set seekP lput ([who] of myself) seekP ; and eventually add it to it.
@@ -53,7 +52,7 @@ end
 
 ; Dynamic simulation of a single agent company. -----------------------------------------------------------------------
 ; It will either try to find a job, or try to fire its employee.
-to init_company
+to go_one_company
   
   ifelse not haveEmployee [                    ; If the agent company has no job
     ask matching matchingAgentWhoNumber [      ; it asks for one to the matching agent,
@@ -74,7 +73,7 @@ end
 
 ; Dynamic simulation of a single agent matching. -----------------------------------------------------------------------
 ; It will try to match a restricted number of agent person and agent company.
-to init_matching
+to go_one_matching
   
   ; At the begining of this tick, the statistic are reset to zero.
   set people_matched_this_turn 0
