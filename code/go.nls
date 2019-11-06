@@ -150,7 +150,7 @@ to go_globals
   ]
   set natural_unemployement ( frictional_unemployement_rate  + structural_unemployement) ; Global unemployement level 
   if unemployment_level != 0 [
-    set hiring_rate (unemployed_matched_this_turn / unemployment_level)
+    set hiring_rate (people_matched_this_turn / unemployment_level)
   ] 
     
   if labor_force != 0 [

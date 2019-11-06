@@ -526,10 +526,10 @@ max_tick
 Number
 
 PLOT
-1177
-304
-1377
-454
+1149
+298
+1386
+448
 HF rates
 NIL
 NIL
@@ -538,7 +538,7 @@ NIL
 0.0
 1.0
 true
-false
+true
 "" ""
 PENS
 "Hiring Rate" 1.0 0 -14439633 true "" "plot hiring_rate\n    "
