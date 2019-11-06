@@ -462,24 +462,6 @@ PENS
 "unemployment rate " 1.0 0 -11783835 true "" "plot unemployment_rate "
 "Vacancy rate" 1.0 0 -2674135 true "" "plot vacancy_rate"
 
-PLOT
-952
-429
-1152
-579
-BC
-NIL
-NIL
-0.0
-1.0
-0.0
-1.0
-true
-false
-"" ""
-PENS
-"default" 1.0 0 -16777216 true "" "plot_beveridge"
-
 BUTTON
 653
 459
@@ -526,10 +508,10 @@ max_tick
 Number
 
 PLOT
-1177
-304
-1377
-454
+1125
+298
+1386
+470
 HF rates
 NIL
 NIL
@@ -538,7 +520,7 @@ NIL
 0.0
 1.0
 true
-false
+true
 "" ""
 PENS
 "Hiring Rate" 1.0 0 -14439633 true "" "plot hiring_rate\n    "
