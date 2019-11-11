@@ -535,7 +535,7 @@ end
 to plot_beveridge
   if (VacancyRateList_simulations != 0 and UnemployedRateList_simulations != 0 ) [
     if (length VacancyRateList_simulations > 0 and length UnemployedRateList_simulations > 0) [
-      if( Compagny_Number mod 100 = 0 and Person_Number mod 100 = 0 and hasConverged)
+      if( Compagny_Number mod 100 = 0 and Person_Number mod 100 = 0)
       [plotxy (last UnemployedRateList_simulations) (last VacancyRateList_simulations)]
     ]
   ]
