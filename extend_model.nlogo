@@ -1,4 +1,15 @@
-__includes["code/setup.nls" "code/go.nls" "code/affichage.nls" "code/measures.nls" "code/extend.nls" ]
+;__includes["code/setup.nls" "code/go.nls" "code/affichage.nls" "code/measures.nls" "code/extend.nls" ]
+__includes[
+  "code/turtles/companies.nls"
+  "code/turtles/matchings.nls"
+  "code/turtles/persons.nls"
+  
+  "code/setup.nls"
+  "code/go.nls"
+  "code/affichage.nls"
+  "code/measures.nls"
+  "code/extend.nls"
+]
 
 to setup
   clear-all

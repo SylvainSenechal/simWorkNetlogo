@@ -50,10 +50,6 @@ to go_one_person
     set time_unemployed time_unemployed + 1    ; At each tick we keep track of the time the agent person was unemployed
   ]
   [
-    if (Optimized_resignation_) [
-      
-      optimezed_resign    ; for the resignation
-    ]
   ]
   
 end

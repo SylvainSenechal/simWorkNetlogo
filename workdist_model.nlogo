@@ -1,4 +1,13 @@
-__includes["code/setup.nls" "code/go.nls" "code/affichage.nls" "code/measures.nls" ]
+__includes[
+  "code/turtles/companies.nls"
+  "code/turtles/matchings.nls"
+  "code/turtles/persons_workdist.nls"
+
+  "code/setup.nls"
+  "code/go.nls"
+  "code/affichage.nls"
+  "code/measures.nls"
+]
 
 to setup
   clear-all
@@ -33,7 +42,7 @@ end
 
 to go
 
-  go_simulations
+  go_simulation
 
 end
 
@@ -537,6 +546,36 @@ stop_simulations
 1
 -1000
 
+SLIDER
+617
+613
+861
+646
+distancePreferenceMean_
+distancePreferenceMean_
+0
+100
+50.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+617
+650
+863
+683
+distancePreferenceMaxFluctu_
+distancePreferenceMaxFluctu_
+0
+100
+17.0
+1
+1
+NIL
+HORIZONTAL
+
 @#$#@#$#@
 ## WHAT IS IT?
 
@@ -879,7 +918,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.1.0
+NetLogo 6.1.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@

@@ -1,39 +1,7 @@
 ;; =================================================================
 ;; VARIABLES
 ;; =================================================================
-
-
 extensions [array table]
-
-; The three agent types : PERSON COMPANY or MATCHING
-breed[persons person]
-breed[companies company]
-breed[matchings matching]
-
-; Agent person attributs
-persons-own[
-  ; Simulation variables:
-  haveJob                 ; The employement status of the agent
-  skills                  ; Its personal skill
-  salary                  ; Its desired salary
-  employer                ; Its potential employer
-  
-  ; Statistics variables:
-  time_unemployed         ; store the time since the last employement
-]
-
-
-;  Agent company attributs
-companies-own[
-  haveEmployee           ; The employement status of the agent
-  skills                 ; The skill needed for its job
-  salary                 ; The proposed salary
-  employee               ; Its potential employee
-  
-   ; Statistics variables:
-  time_unemployee         ; store the time since the last employee
-]
-
 
 ; Globals variables of all the simulations
 globals[ 
@@ -162,13 +130,6 @@ globals[
   
 ]
 
-matchings-own [
-   seekC                           ; list of of agents Company looking for an employee
-   seekP                           ; list of agents Person looking for a job
-]
-
-
-
 ;; =================================================================
 ;; SETUP PROCEDURES
 ;; =================================================================
@@ -199,63 +160,7 @@ to setup_simulation_without_globals
   reset-ticks 
   
   ;;add button start_next to cumulate the simulation and the go 
-end 
-
-; Initialize the agents PERSON
-to setup_persons  
-  
-  set-default-shape persons "person"       ; Give a "human" shape to the agents person
-  create-persons Person_Number             ; Create "Person_Number" agents person with attributs:
-  [ ; Physical attributs:
-    set color white                        ;    color
-    set size 1.5                           ;    size
-    setxy random-xcor random-ycor          ;    (random) position
-    ; Simulation attributs;
-    set haveJob False                      ;    employement status
-    set employer nobody                    ;    employer
-    setup_skills                           ;    personal skills
-    setup_salary                           ;    desired salary
-    ; Statistic attributs:
-    set time_unemployed 0                  ;    time unemployed
-  ]
-  
 end
-
-; Initialize the agents COMPANY
-to setup_companies  
-  
-  set-default-shape  companies "house"    ; Give a "house" shape to the agents company
-  create-companies Compagny_Number        ; Create "Compagny_Number" agents company with attributs:
-  [ ; Physical attributs:
-    set color grey                        ;    color
-    set size 1.5                          ;    size
-    setxy random-xcor random-ycor         ;    (random) position
-    ; Simulation attributs;
-    set haveEmployee False                ;    employement status
-    set employee nobody                   ;    employer
-    setup_skills                          ;    personal skills
-    setup_salary                          ;    desired salary
-    set time_unemployee 0   
-  ]
-end
-
-; Initialize the agents MATCHING
-to setup_matching
-  
-  set-default-shape  matchings "target"  ; Give a "target" shape to the agent matching
-  create-matchings 1                     ; Create 1 agent matching with attributs:
-  [ ; Physical attributs:
-    set color orange                     ;     color
-    set size 2.                          ;     size
-    setxy 0 0                            ;     (central) position
-    ; Simulation attributs:
-    set seekP []                         ;     list of potential employees (agents person)
-    set seekC []                         ;     list of potential recruitors (agents company)
-    
-    set matchingAgentWhoNumber who       ; "matchingAgentWhoNumber" enable other agents to find this particular agent
-    ]
-end
-
 
 ;; =================================================================
 ;; MISCELLAENOUS VARIABLES SETTINGS
@@ -305,13 +210,6 @@ to setup_globals
   
 end
 
-
-
-
-
-
-
-
 ; Initialize the skills of the agents (person or company)
 to setup_skills
   set skills array:from-list n-values n_skills [0]
@@ -324,5 +222,11 @@ end
 to setup_salary
   let random_variation (random salaryMaxFluctu)
   set salary (salaryMean + random_variation)
+end
+
+; Initialize the salary looked for by the agents (person or company)
+to setup_distance_preference
+  let random_variation (random distancePreferenceMaxFluctu_)
+  set distance_pref (distancePreferenceMean_ + random_variation)
 end
 

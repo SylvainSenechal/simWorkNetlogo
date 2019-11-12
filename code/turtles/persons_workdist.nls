@@ -1,0 +1,34 @@
+breed[persons person]
+
+; Agent person attributs
+persons-own[
+  ; Simulation variables:
+  haveJob                 ; The employement status of the agent
+  skills                  ; Its personal skill
+  distance_pref           ; Its personal distance between him and his job preference
+  salary                  ; Its desired salary
+  employer                ; Its potential employer
+  
+  ; Statistics variables:
+  time_unemployed         ; store the time since the last employement
+]
+
+; Initialize the agents PERSON
+to setup_persons  
+  set-default-shape persons "person"       ; Give a "human" shape to the agents person
+  create-persons Person_Number             ; Create "Person_Number" agents person with attributs:
+  [
+    ; Physical attributs:
+    set color white                        ;    color
+    set size 1.5                           ;    size
+    setxy random-xcor random-ycor          ;    (random) position
+    ; Simulation attributs;
+    set haveJob False                      ;    employement status
+    set employer nobody                    ;    employer
+    setup_skills                           ;    personal skills
+    setup_salary                           ;    desired salary
+    setup_distance_preference              ;    personal distance preference
+    ; Statistic attributs:
+    set time_unemployed 0                  ;    time unemployed
+  ]  
+end

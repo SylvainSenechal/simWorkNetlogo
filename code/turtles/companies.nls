@@ -1,0 +1,30 @@
+breed[companies company]
+
+;  Agent company attributs
+companies-own[
+  haveEmployee           ; The employement status of the agent
+  skills                 ; The skill needed for its job
+  salary                 ; The proposed salary
+  employee               ; Its potential employee
+  
+   ; Statistics variables:
+  time_unemployee         ; store the time since the last employee
+]
+
+; Initialize the agents COMPANY
+to setup_companies
+  set-default-shape  companies "house"    ; Give a "house" shape to the agents company
+  create-companies Compagny_Number        ; Create "Compagny_Number" agents company with attributs:
+  [
+    ; Physical attributs:
+    set color grey                        ;    color
+    set size 1.5                          ;    size
+    setxy random-xcor random-ycor         ;    (random) position
+    ; Simulation attributs:
+    set haveEmployee False                ;    employement status
+    set employee nobody                   ;    employer
+    setup_skills                          ;    personal skills
+    setup_salary                          ;    desired salary
+    set time_unemployee 0   
+  ]
+end

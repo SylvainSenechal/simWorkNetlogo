@@ -1,0 +1,23 @@
+breed[matchings matching]
+
+matchings-own [
+   seekC                           ; list of of agents Company looking for an employee
+   seekP                           ; list of agents Person looking for a job
+]
+
+; Initialize the agents MATCHING
+to setup_matching
+  set-default-shape  matchings "target"  ; Give a "target" shape to the agent matching
+  create-matchings 1                     ; Create 1 agent matching with attributs:
+  [
+    ; Physical attributs:
+    set color orange                     ;     color
+    set size 2.                          ;     size
+    setxy 0 0                            ;     (central) position
+    ; Simulation attributs:
+    set seekP []                         ;     list of potential employees (agents person)
+    set seekC []                         ;     list of potential recruitors (agents company)
+    
+    set matchingAgentWhoNumber who       ; "matchingAgentWhoNumber" enable other agents to find this particular agent
+  ]
+end
