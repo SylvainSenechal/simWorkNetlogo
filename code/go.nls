@@ -26,11 +26,13 @@ to go_simulation
 end
 
 
+
+
 ; Dynamic simulation of a single agent person. -----------------------------------------------------------------------
 ; It will first try to find a job.
 to go_one_person
   
-  if not haveJob [                             ; if the agent person has no job
+  ifelse not haveJob [                             ; if the agent person has no job
     ask matching matchingAgentWhoNumber [      ; it asks for one to the matching agent
       ifelse (Activate_optimized_matching_ = true) [ ; HERE IF WE USE OPTIMIZED MATCHING
         if (seekJob?) [
@@ -46,6 +48,12 @@ to go_one_person
       ] 
     ]
     set time_unemployed time_unemployed + 1    ; At each tick we keep track of the time the agent person was unemployed
+  ]
+  [
+    if (Optimized_resignation_) [
+      
+      optimezed_resign    ; for the resignation
+    ]
   ]
   
 end
@@ -198,6 +206,8 @@ to go_globals
   
 end
 
+
+      
 
 to-report converge?
   report False

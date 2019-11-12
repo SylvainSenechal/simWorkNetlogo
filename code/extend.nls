@@ -1,0 +1,15 @@
+to optimezed_resign
+  if (haveJob)[
+    let resign? (similarity_person_to_company self employer) + (productivity [skills] of employer skills )
+    if (resign? < unexpected_resignation_)[
+      quit
+    ]
+  ]
+end
+
+to quit
+  show "je demi"
+  let me self
+  if (haveJob)[ ask employer [fire_employee me] ]
+
+end

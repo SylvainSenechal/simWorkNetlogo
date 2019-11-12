@@ -1,4 +1,4 @@
-__includes["code/setup.nls" "code/go.nls" "code/affichage.nls" "code/measures.nls" ]
+__includes["code/setup.nls" "code/go.nls" "code/affichage.nls" "code/measures.nls" "code/extend.nls" ]
 
 to setup
   clear-all
@@ -27,13 +27,15 @@ to setup
     set  unexpected_resignation_ 0
     set reconvertion_person_rate_ 0
     set reconvertion_company_rate_ 0
+    set unexpected_resignation_ unexpected_resignation
+    set Optimized_resignation_ Optimized_resignation
 
   reset-ticks
 end
 
 to go
 
-  go_simulations
+
 
 end
 
@@ -61,12 +63,7 @@ to setup_sliders_globals
 end
 
 
-to update_bev
 
- show indicator
- set indicator 1
- show indicator
-end
 
 
 to plot_beveridge
@@ -281,6 +278,32 @@ NIL
 HORIZONTAL
 
 SLIDER
+10
+363
+194
+396
+unexpected_resignation
+unexpected_resignation
+0
+1
+0.47
+0.01
+1
+NIL
+HORIZONTAL
+
+SWITCH
+918
+354
+1102
+387
+Optimized_resignation
+Optimized_resignation
+0
+1
+-1000
+
+SLIDER
 7
 518
 261
@@ -462,47 +485,13 @@ PENS
 "unemployment rate " 1.0 0 -11783835 true "" "plot unemployment_rate "
 "Vacancy rate" 1.0 0 -2674135 true "" "plot vacancy_rate"
 
-BUTTON
-653
-459
-895
-492
-setup_after
-setup_simulation_without_globals
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-433
-521
-536
-554
-update_bev
-update_bev
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
 INPUTBOX
 256
 618
 405
 678
 max_tick
-0.0
+500.0
 1
 0
 Number
