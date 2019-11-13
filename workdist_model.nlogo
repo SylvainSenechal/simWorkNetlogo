@@ -7,6 +7,7 @@ __includes[
   "code/go.nls"
   "code/affichage.nls"
   "code/measures.nls"
+  "code/extend.nls"
 ]
 
 to setup
@@ -18,7 +19,7 @@ to setup
 
     set Activate_optimized_matching_ false
     set Activate_appendice_ false
-    set Activate_resignation_ false
+
     set Optimized_resignation_ false
     set Activate_perspective_ false
 
@@ -64,6 +65,8 @@ to setup_sliders_globals
   set Person_Number Person_Number_
   set Compagny_Number Compagny_Number_
   set Rseed Rseed_
+  set distancePreferenceMean  distancePreferenceMean_
+  set distancePreferenceMaxFluctu distancePreferenceMaxFluctu_
 
   set time_window time_window_
 
@@ -918,7 +921,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.1.1
+NetLogo 6.1.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@

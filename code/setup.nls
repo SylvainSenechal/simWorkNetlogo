@@ -126,9 +126,8 @@ globals[
   Activate_perspective_   ; activate or not the perspective // not yet use 
   
   ;extention of thibaut 
-  distancePreferenceMaxFluctu_
-  distance_pref
-  distancePreferenceMean_
+  distancePreferenceMaxFluctu ; ?
+  distancePreferenceMean        ; ?
   
   
   
@@ -210,6 +209,7 @@ to setup_globals
   set long_unemployement_array []
   set happiness_worker_array []
   set happiness_companies_array []
+  
  
   
 end
@@ -230,7 +230,7 @@ end
 
 ; Initialize the salary looked for by the agents (person or company)
 to setup_distance_preference
-  let random_variation (random distancePreferenceMaxFluctu_)
-  set distance_pref (distancePreferenceMean_ + random_variation)
+  let random_variation (random distancePreferenceMaxFluctu)
+  set distance_pref (distancePreferenceMean + random_variation)
 end
 

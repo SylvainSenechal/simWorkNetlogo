@@ -7,7 +7,7 @@ persons-own[
   skills                  ; Its personal skill
   salary                  ; Its desired salary
   employer                ; Its potential employer
-  
+  distance_pref           ; Its personal distance between him and his job preference
   ; Statistics variables:
   time_unemployed         ; store the time since the last employement
 ]

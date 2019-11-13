@@ -19,7 +19,7 @@ to setup
 
     set Activate_optimized_matching_ false
     set Activate_appendice_ false
-    set Activate_resignation_ false
+
     set Optimized_resignation_ false
     set Activate_perspective_ false
 
@@ -77,8 +77,6 @@ to update_bev
  set indicator 1
  show indicator
 end
-
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 290
