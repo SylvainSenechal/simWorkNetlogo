@@ -3,7 +3,7 @@ __includes[
   "code/turtles/companies.nls"
   "code/turtles/matchings.nls"
   "code/turtles/persons.nls"
-  
+
   "code/setup.nls"
   "code/go.nls"
   "code/affichage.nls"
@@ -20,7 +20,7 @@ to setup
 
     set Activate_optimized_matching_ false
     set Activate_appendice_ false
-    set Activate_resignation_ false
+
     set Optimized_resignation_ false
     set Activate_perspective_ false
 

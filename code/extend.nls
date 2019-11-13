@@ -1,7 +1,12 @@
-to optimezed_resign
+
+
+
+;for the resignation extention du modéle question 2.1
+to optimized_resign
   if (haveJob)[
-    let resign? (similarity_person_to_company self employer) + (productivity [skills] of employer skills )
-    if (resign? < unexpected_resignation_)[
+    let resign? (similarity_person_to_company self employer) + (productivity [skills] of employer skills ); the hapiness of agent PERSON 
+    if (resign? < unexpected_resignation_) ; unexpected_resignation_   represent the threshold of hapiness that can be modify by the interface . 
+    [
       quit
     ]
   ]

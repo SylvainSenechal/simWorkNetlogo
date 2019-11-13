@@ -2,7 +2,7 @@ __includes[
   "code/turtles/companies.nls"
   "code/turtles/matchings.nls"
   "code/turtles/persons.nls"
-  
+
   "code/setup.nls"
   "code/go.nls"
   "code/affichage.nls"
@@ -79,20 +79,6 @@ to update_bev
 end
 
 
-to plot_beveridge
-
-  if indicator != 0 [
-
-    if ( vacancy_rate_list != 0 and unemployement_rate_list != 0) [
-      if (length  vacancy_rate_list > 0 and length unemployement_rate_list > 0) [
-
-        plotxy (last unemployement_rate_list) (last  vacancy_rate_list)
-        show "je plot"
-        set indicator 0
-      ]
-    ]
-  ]
-end
 @#$#@#$#@
 GRAPHICS-WINDOW
 290
@@ -239,7 +225,7 @@ n_match_
 n_match_
 0
 100
-100.0
+97.0
 1
 1
 NIL
@@ -889,7 +875,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.1.1
+NetLogo 6.1.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@

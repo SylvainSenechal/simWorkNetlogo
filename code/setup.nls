@@ -115,16 +115,20 @@ globals[
   unexpected_resignation_
   reconvertion_person_rate_
   reconvertion_company_rate_
-
-  ; extention
-  
   Activate_optimized_matching_ ; boolean if we activate the optimzed matching
   M ; for appendice a , the number of couple make / turn
   Activate_appendice_
-  Activate_resignation_
-  Optimized_resignation_
-  Activate_perspective_
   
+
+  ; extention 
+  
+  Optimized_resignation_  ; activate or not the resignation question 2.1
+  Activate_perspective_   ; activate or not the perspective // not yet use 
+  
+  ;extention of thibaut 
+  distancePreferenceMaxFluctu_
+  distance_pref
+  distancePreferenceMean_
   
   
   
@@ -156,7 +160,7 @@ to setup_simulation_without_globals
   setup_matching
   show unemployement_rate_list
   
-  plot_beveridge
+
   reset-ticks 
   
   ;;add button start_next to cumulate the simulation and the go 
