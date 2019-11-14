@@ -1,0 +1,133 @@
+to compute
+  let tmpX test_sensitivity
+  clear-all
+  set test_sensitivity tmpX
+  
+  
+  set-plot-pen-mode 0
+  
+  setup
+  
+  let tmp 0
+  
+  if param = "matching_quality_threshold" [set tmp matching_quality_threshold set matching_quality_threshold 0]
+  if param = "firing_quality_threshold" [set tmp firing_quality_threshold set firing_quality_threshold 0]
+  if param = "unexpected_firing" [set tmp unexpected_firing set unexpected_firing 0]
+  if param = "max_productivity_fluctuation" [set tmp max_productivity_fluctuation set max_productivity_fluctuation 0]
+  if param = "unexpected_worker_motivation" [set tmp unexpected_worker_motivation set unexpected_worker_motivation 0]
+  if param = "unexpected_company_motivation" [set tmp unexpected_company_motivation set unexpected_company_motivation 0]
+  if param = "exceptional_matching" [set tmp exceptional_matching set exceptional_matching 0]
+  if param = "resign_threshold" [set tmp unexpected_resignation_ set unexpected_resignation_ 0]
+  
+  ;if param = "exceptional_retirement" [set tmp exceptional_retirement set exceptional_retirement 0]
+  
+  let i 0
+  repeat 11
+  [
+    let tmp_cum_emply_time 0
+    let tmp_cum_unemply_time 0
+    
+    let tmp1 0
+    let tmp11 0
+    let tmp13 0
+     
+    repeat 10
+    [
+      go
+      
+      ;set tmp_cum_emply_time tmp_cum_emply_time + mean cumulated_employment_time_list
+      ;set tmp_cum_unemply_time tmp_cum_unemply_time + mean cumulated_unemployment_time_list
+      
+      ;; unemployment
+      let mean_unemployment_rate mean unemployement_rate_list 
+      let variance_unemployment_rate variance unemployement_rate_list 
+      
+      set tmp1 tmp1 + mean_unemployment_rate
+      set tmp11 tmp11 + (mean_unemployment_rate - 2 * variance_unemployment_rate)
+      set tmp13 tmp13 + (mean_unemployment_rate + 2 * variance_unemployment_rate)
+      
+    ]
+    
+    if param = "matching_quality_threshold" 
+    [  
+      set matching_quality_threshold matching_quality_threshold + 0.1
+    ]
+    if param = "firing_quality_threshold" 
+    [
+      set firing_quality_threshold firing_quality_threshold + 0.1
+    ]
+    if param = "unexpected_firing"
+    [
+      set unexpected_firing unexpected_firing + 0.1
+    ]
+    if param = "max_productivity_fluctuation"
+    [
+      set max_productivity_fluctuation max_productivity_fluctuation + 0.1
+    ]
+    if param = "unexpected_worker_motivation"
+    [
+      set unexpected_worker_motivation unexpected_worker_motivation + 0.1
+    ]
+    if param = "unexpected_company_motivation"
+    [
+      set unexpected_company_motivation unexpected_company_motivation + 0.1
+    ]
+    if param = "exceptional_matching"
+    [
+      set exceptional_matching exceptional_matching + 0.1
+    ]
+    
+    if param = "resign_threshold"
+    [
+      set unexpected_resignation_ unexpected_resignation_ + 0.1
+    ]
+    
+    
+    let val01 tmp_cum_emply_time / 10
+    let val02 tmp_cum_unemply_time / 10
+    
+    let val1 tmp1 / 10
+   
+    let val11 tmp11 / 10
+    let val13 tmp13 / 10
+
+    
+    set-current-plot "cumulated_time_sensitivity"
+    
+    set-current-plot-pen "cet_pen"
+    plotxy i val01
+    
+    set-current-plot-pen "cut_pen"
+    plotxy i val02
+
+    set-current-plot "unemployment_sensitivity"
+    
+    set-current-plot-pen "em_pen"
+    plotxy i val1
+    
+    set-current-plot-pen "em_1_pen"
+    plotxy i val11
+    
+    set-current-plot-pen "em_3_pen"
+    plotxy i val13
+    
+    
+    set i i + 0.1
+    
+    ;if generate_beveridge[generate_beveridge_curve i * 10]
+    
+  ]
+  
+  if param = "matching_quality_threshold" [set matching_quality_threshold tmp]
+  if param = "firing_quality_threshold" [set firing_quality_threshold tmp]
+  if param = "unexpected_firing" [set unexpected_firing tmp]
+  if param = "max_productivity_fluctuation" [set max_productivity_fluctuation tmp]
+  if param = "unexpected_worker_motivation" [set unexpected_worker_motivation tmp]
+  if param = "unexpected_company_motivation" [set unexpected_company_motivation tmp]
+  if param = "exceptional_matching" [set exceptional_matching tmp]
+ 
+  if param = "resign_threshold" [set unexpected_resignation_ tmp]
+ 
+
+ 
+end

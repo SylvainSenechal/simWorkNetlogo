@@ -8,6 +8,7 @@ __includes[
   "code/affichage.nls"
   "code/measures.nls"
   "code/extend.nls"
+  "code/parameter_sensitivity.nls"
 ]
 
 to setup
@@ -136,10 +137,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-382
-448
-465
-496
+358
+481
+441
+529
 NIL
 setup
 NIL
@@ -153,10 +154,10 @@ NIL
 1
 
 BUTTON
-511
-449
-630
-498
+465
+479
+584
+528
 NIL
 go
 T
@@ -223,7 +224,7 @@ n_match_
 n_match_
 0
 100
-97.0
+82.0
 1
 1
 NIL
@@ -289,6 +290,33 @@ unexpected_worker_motivation_
 NIL
 HORIZONTAL
 
+CHOOSER
+674
+478
+861
+523
+param
+param
+"matching_quality_threshold" "firing_quality_threshold" "unexpected_firing" "max_productivity_fluctuation" "unexpected_worker_motivation" "unexpected_company_motivation" "exceptional_matching" "max_graduation" "resign_threshold"
+2
+
+BUTTON
+860
+478
+936
+556
+compute
+set test_sensitivity 1\n\ncompute\n\nprint test_sensitivity
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
 SLIDER
 6
 322
@@ -353,10 +381,10 @@ NIL
 HORIZONTAL
 
 INPUTBOX
-27
-615
-91
-675
+1092
+511
+1156
+571
 Rseed_
 1.0
 1
@@ -364,10 +392,10 @@ Rseed_
 Number
 
 SWITCH
-104
-612
-232
-645
+354
+542
+482
+575
 linksVisible
 linksVisible
 0
@@ -375,10 +403,10 @@ linksVisible
 -1000
 
 SWITCH
-104
-648
-232
-681
+487
+542
+603
+575
 colorVisible
 colorVisible
 0
@@ -386,10 +414,10 @@ colorVisible
 -1000
 
 MONITOR
-795
-244
-884
-289
+708
+253
+797
+298
 vacancy_rate
 vacancy_rate
 17
@@ -397,10 +425,10 @@ vacancy_rate
 11
 
 MONITOR
-930
-246
-1061
-291
+706
+304
+837
+349
 unemployement_rate
 unemployment_rate
 17
@@ -408,10 +436,10 @@ unemployment_rate
 11
 
 SLIDER
-1092
-250
-1215
-283
+7
+359
+130
+392
 time_window_
 time_window_
 0
@@ -423,15 +451,15 @@ NIL
 HORIZONTAL
 
 SLIDER
-922
-310
-1119
-343
+6
+87
+203
+120
 long_time_unemployed
 long_time_unemployed
 0
 50
-6.0
+50.0
 1
 1
 NIL
@@ -456,45 +484,11 @@ PENS
 "unemployment rate " 1.0 0 -11783835 true "" "plot unemployment_rate "
 "Vacancy rate" 1.0 0 -2674135 true "" "plot vacancy_rate"
 
-BUTTON
-653
-459
-895
-492
-setup_after
-setup_simulation_without_globals
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-433
-521
-536
-554
-update_bev
-update_bev
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
 INPUTBOX
-256
-618
-405
-678
+1164
+512
+1313
+572
 max_tick
 0.0
 1
@@ -502,10 +496,10 @@ max_tick
 Number
 
 PLOT
-1125
-298
-1386
-470
+1106
+248
+1367
+420
 HF rates
 NIL
 NIL
@@ -521,15 +515,35 @@ PENS
 "firing Rate" 1.0 0 -2674135 true "" "plot firing_rate"
 
 SWITCH
-25
-87
-203
-120
+1146
+469
+1324
+502
 stop_simulations
 stop_simulations
 1
 1
 -1000
+
+TEXTBOX
+705
+444
+855
+462
+test parameters sensitives
+11
+0.0
+1
+
+TEXTBOX
+367
+447
+517
+465
+launch a single simulation
+11
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?

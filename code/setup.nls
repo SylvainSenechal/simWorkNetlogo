@@ -66,6 +66,7 @@ globals[
   
   
   ; Sensitivity analysis variables:
+  test_sensitivity
   sensibility_parameter_1          ; Name of the first parameter of the sensitivity analysis
   min_param_1                      ; Minimum value of the first parameter
   max_param_1                      ; Maximum value of the first parameter
