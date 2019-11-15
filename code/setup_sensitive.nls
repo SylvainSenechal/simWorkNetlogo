@@ -1,7 +1,39 @@
 ;; =================================================================
 ;; VARIABLES
 ;; =================================================================
+
+
 extensions [array table]
+
+; The three agent types : PERSON COMPANY or MATCHING
+breed[persons person]
+breed[companies company]
+breed[matchings matching]
+
+; Agent person attributs
+persons-own[
+  ; Simulation variables:
+  haveJob                 ; The employement status of the agent
+  skills                  ; Its personal skill
+  salary                  ; Its desired salary
+  employer                ; Its potential employer
+  
+  ; Statistics variables:
+  time_unemployed         ; store the time since the last employement
+]
+
+
+;  Agent company attributs
+companies-own[
+  haveEmployee           ; The employement status of the agent
+  skills                 ; The skill needed for its job
+  salary                 ; The proposed salary
+  employee               ; Its potential employee
+  
+   ; Statistics variables:
+  time_unemployee         ; store the time since the last employee
+]
+
 
 ; Globals variables of all the simulations
 globals[ 
@@ -20,10 +52,8 @@ globals[
  firing_quality_threshold          ; Lower bound on the productivity for an employee not be fired
  max_productivity_fluctuation      ; Random deviation to the productivity of an employee
  distMax                           ; Maximum distance in the simulation's world
- matchingAgentWhoNumber            ; Identifier of the agent MATCHING
- indicator
+ matchingAgentWhoNumber            ; Identifier of the agent MAYCHING
  
-  
  Person_Number                     ; Number of agents PERSON in a simulation
  Compagny_Number                   ; Number of agents COMPANY in a simulation
  Rseed                             ; Random seed used by the simulation
@@ -31,43 +61,37 @@ globals[
   ; Statistic variables:
   
   labor_force                      ; The number of agents person having or looking for a job
-  unemployment_level               ; The number of unemployed agents person U
+  unemployment_level               ; The number of unemployed agents person 
   unemployment_rate               ; The proportion of non-working agents person
-  vacant_jobs                      ; The number of unoccupied jobs V
+  vacant_jobs                      ; The number of unoccupied jobs
   vacancy_rate                     ; The proportion of unoccupied jobs
   participation_rate               ; The proportion of people engaged in a job or in job seeking
   frictional_unemployement_time    ; Cumulated delay before finding a job for those actively seeking one
   frictional_unemployement_rate    ; Average delay to find a job when looking for one
-  
-  people_matched_this_turn         ; Number of agents person (were employed+unemployed) which find a job this turn
-  unemployed_matched_this_turn     ; Number of unemployed person which find a job this turn
-  employed_fired_this_turn         ; Number of employed person which were fired this turn 
-  
+  people_matched_this_turn         ; Number of agents person which find a job this turn
   structural_unemployement         ; Number of mismatch between potential employees and potentials employer each turn
   natural_unemployement            ; Global unemployement level 
-  ;count_unemployed_total           ; Number total of unemployed agents person
+  count_unemployed_total           ; Number total of unemployed agents person
   unemployement_rate_list          ; unemployement_rate values over time
   vacancy_rate_list                ; vacancy_rate over time
-  hiring_rate                      ; hiring_rate over time
-  firing_rate                      ; firing_rate over time
+  employed_fired_this_turn
+  hiring_rate
+  firing_rate
     
   time_window                      ; Size of the "slidding window" used by the moving mean(s)
-  
  
   
  ; Multiple simulations variables:
  
   n_sub_simu                       ; Number of simulation averaged to get one statistic value
   n_ticks_max                      ; Maximum number of tick in a simulation
-  
   epsilon                          ; Maximum deviation from the moving mean(s) allowed
   VacancyRateList_simulations      ; Final vacancy_rate values over simulations  
   UnemployedRateList_simulations   ; Final unemployement_rate values over simulations  
-
+  stop_simulations                 ; Emergency stop when simulations are running non-interactively
   
   
   ; Sensitivity analysis variables:
-  test_sensitivity
   sensibility_parameter_1          ; Name of the first parameter of the sensitivity analysis
   min_param_1                      ; Minimum value of the first parameter
   max_param_1                      ; Maximum value of the first parameter
@@ -91,10 +115,10 @@ globals[
   happiness_worker_array
   happiness_companies_array
   
-  ;unemployement_array_beveridge  
-  ;long_unemployement_array_beveridge  
-  ;happiness_worker_array_beveridge    
-  ;happiness_companies_array_beveridge
+  unemployement_array_beveridge  
+  long_unemployement_array_beveridge  
+  happiness_worker_array_beveridge    
+  happiness_companies_array_beveridge
   
  unemployement_array_parameter
  long_unemployement_array_parameter
@@ -117,23 +141,25 @@ globals[
   unexpected_resignation_
   reconvertion_person_rate_
   reconvertion_company_rate_
+  
+  
+  ; extention
+  
   Activate_optimized_matching_ ; boolean if we activate the optimzed matching
   M ; for appendice a , the number of couple make / turn
   Activate_appendice_
-  
-
-  ; extention 
-  
-  Optimized_resignation_  ; activate or not the resignation question 2.1
-  Activate_perspective_   ; activate or not the perspective // not yet use 
-  
-  ;extention of thibaut 
-  distancePreferenceMaxFluctu ; ?
-  distancePreferenceMean        ; ?
-  
-  
+  Activate_resignation_
+  Optimized_resignation_
+  Activate_perspective_
   
 ]
+
+matchings-own [
+   seekC                           ; list of of agents Company looking for an employee
+   seekP                           ; list of agents Person looking for a job
+]
+
+
 
 ;; =================================================================
 ;; SETUP PROCEDURES
@@ -151,22 +177,127 @@ to setup_simulation
   reset-ticks 
 end 
 
-; Same function without the globals settings
+; Same function witthout the globals settings
 to setup_simulation_without_globals
-  ;; TODO clean affichage (sauf bev)
-  random-seed Rseed 
   
+  random-seed Rseed  
   setup_persons
   setup_companies
   setup_matching
-  show unemployement_rate_list
   
-
   reset-ticks 
+end 
+
+; Initialize the agents PERSON
+to setup_persons  
   
-  ;;add button start_next to cumulate the simulation and the go 
+  set-default-shape persons "person"       ; Give a "human" shape to the agents person
+  create-persons Person_Number             ; Create "Person_Number" agents person with attributs:
+  [ ; Physical attributs:
+    set color white                        ;    color
+    set size 1.5                           ;    size
+    setxy random-xcor random-ycor          ;    (random) position
+    ; Simulation attributs;
+    set haveJob False                      ;    employement status
+    set employer nobody                    ;    employer
+    setup_skills                           ;    personal skills
+    setup_salary                           ;    desired salary
+    ; Statistic attributs:
+    set time_unemployed 0                  ;    time unemployed
+  ]
+  
 end
 
+; Initialize the agents COMPANY
+to setup_companies  
+  
+  set-default-shape  companies "house"    ; Give a "house" shape to the agents company
+  create-companies Compagny_Number        ; Create "Compagny_Number" agents company with attributs:
+  [ ; Physical attributs:
+    set color grey                        ;    color
+    set size 1.5                          ;    size
+    setxy random-xcor random-ycor         ;    (random) position
+    ; Simulation attributs;
+    set haveEmployee False                ;    employement status
+    set employee nobody                   ;    employer
+    setup_skills                          ;    personal skills
+    setup_salary                          ;    desired salary
+    set time_unemployee 0   
+  ]
+end
+
+; Initialize the agents MATCHING
+to setup_matching
+  
+  set-default-shape  matchings "target"  ; Give a "target" shape to the agent matching
+  create-matchings 1                     ; Create 1 agent matching with attributs:
+  [ ; Physical attributs:
+    set color orange                     ;     color
+    set size 2.                          ;     size
+    setxy 0 0                            ;     (central) position
+    ; Simulation attributs:
+    set seekP []                         ;     list of potential employees (agents person)
+    set seekC []                         ;     list of potential recruitors (agents company)
+    
+    set matchingAgentWhoNumber who       ; "matchingAgentWhoNumber" enable other agents to find this particular agent
+    ]
+end
+
+
+;; =================================================================
+;; MISCELLAENOUS VARIABLES SETTINGS
+;; =================================================================
+
+
+
+; Initiate the variables of the simulation
+to setup_globals  
+ 
+  set salaryMax (salaryMean + salaryMaxFluctu)                                          ; The maximum salaray possible in the simulation
+  set distMax  ( sqrt ((world-width * world-width +  world-height *  world-height ) / 4)); The maximum distance in this toric simulation
+  
+  set labor_force (count persons with [not haveJob] + count persons with [haveJob])     ; The number of agents person having or looking for a job
+  set unemployment_level count persons with [not haveJob]                               ; The number of unemployed agents person 
+  
+  if Person_Number != 0 [
+    set unemployment_rate (unemployment_level /   Person_Number)                       ; The proportion of non-working agents person
+    ]
+  set vacant_jobs count companies with[not haveEmployee]                                ; The number of vacant jobs
+  if labor_force != 0 [
+    set vacancy_rate (vacant_jobs / labor_force)                                        ; The proportion of unoccupied jobs
+  ] 
+  if Person_Number != 0 [
+    set participation_rate ( labor_force / Person_Number)                               ; The proportion of people engaged in a job or in job seeking
+    ]
+  
+  set frictional_unemployement_time 0                                                   ; Cumulated delay before finding a job for those actively seeking one
+  set frictional_unemployement_rate 0                                                   ; Average delay to find a job when looking for one
+  set structural_unemployement 0                                                        ; Number of mismatch between potential employees and potential employers each turn
+  set natural_unemployement 0                                                           ; Global unemployement level 
+  
+  set count_unemployed_total 0                                                          ; Number total of unemployed agents person
+  
+  set people_matched_this_turn 0                                                        ; Number of agents person which find a job this turn
+ 
+  set unemployement_rate_list []                                                        ; Here we store the unemployed rate and the vacancy rate 
+  set vacancy_rate_list []                                                              ; over several ticks in a "sliding window" fashion  
+  
+  
+  set number_array_max  20 ;; how many value we stock in arrays
+ set unemployement_array  []
+ set long_unemployement_array []
+ set happiness_worker_array []
+ set happiness_companies_array []
+  
+end
+
+
+; Report the sliders variables to the simulation's variable (for advanced simulations)
+;to setup_sliders_simulations
+  
+;  set time_window time_window_                 ; size of the sliding window to compute moving mean(s)
+  
+;end
 
 ; Create the range of values for the three sensitivity parameters
 to setup_range_sensitivity_analysis
@@ -197,53 +328,63 @@ to setup_range_sensitivity_analysis
   ]
 end
 
-;; =================================================================
-;; MISCELLAENOUS VARIABLES SETTINGS
-;; =================================================================
+
+; Match the argument "name" and its evaluation "value" to its corresponding variable in the simulation
+to match_sensibility_name_variable [name value]
+  if name = "Number of persons" [
+   set Person_Number value 
+  ]
+  if name = "Number of companies" [
+   set Compagny_Number value 
+  ]
+  if name = "Exceptional matching" [
+   set exceptional_matching value 
+  ]
+  if name = "Matching quality threshold" [
+   set matching_quality_threshold value 
+  ]
+  if name = "Firing quality threshold" [
+   set firing_quality_threshold value 
+  ]
+  if name = "Salary maximum fluctuation" [
+   set salaryMaxFluctu value 
+  ]
+  if name = "Salary mean" [
+   set salaryMean value 
+  ]
+  if name = "Unexpected company motivation" [
+   set unexpected_company_motivation value 
+  ]
+  if name = "Unexpeted worker motivation" [
+   set unexpected_worker_motivation value 
+  ]
+  if name = "Maximum productivity fluctuation" [
+   set max_productivity_fluctuation value 
+  ]
+  if name = "Number of different skills" [
+    set n_skills value
+  ]
+  if name = "Unexpected firing" [
+    set unexpected_firing value
+  ]
+   if name = "unexpeted_resignation" [
+    set unexpected_resignation_ value
+  ]
+    if name = "s" [
+    set s_ value
+  ]
+     if name = "reconvertion_person_rate" [
+    set reconvertion_person_rate_ value
+  ]
+  if name = "n_match" [
+    set n_match_ value
+  ]
+  
+  
+  
+  
 
 
-
-; Initiate the variables of the simulation
-to setup_globals  
- 
-  set salaryMax (salaryMean + salaryMaxFluctu)                                          ; The maximum salaray possible in the simulation
-  set distMax  ( sqrt ((world-width * world-width +  world-height *  world-height ) / 4)); The maximum distance in this toric simulation
-  
-  set labor_force (count persons with [not haveJob] + count persons with [haveJob])     ; The number of agents person having or looking for a job
-  set unemployment_level count persons with [not haveJob]                               ; The number of unemployed agents person 
-  
-  if Person_Number != 0 [
-    set unemployment_rate  (unemployment_level /   Person_Number)                       ; The proportion of non-working agents person
-    ]
-  set vacant_jobs count companies with[not haveEmployee]                                ; The number of vacant jobs
-  if labor_force != 0 [
-    set vacancy_rate (vacant_jobs / labor_force)                                        ; The proportion of unoccupied jobs
-  ] 
-  if Person_Number != 0 [
-    set participation_rate ( labor_force / Person_Number)                               ; The proportion of people engaged in a job or in job seeking
-    ]
-  
-  set frictional_unemployement_time 0                                                   ; Cumulated delay before finding a job for those actively seeking one
-  set frictional_unemployement_rate 0                                                   ; Average delay to find a job when looking for one
-  set structural_unemployement 0                                                        ; Number of mismatch between potential employees and potential employers each turn
-  set natural_unemployement 0                                                           ; Global unemployement level 
-  
-  ;set count_unemployed_total 0                                                          ; Number total of unemployed agents person
-                                                             ; Number max of ticks in one simulation
-  set people_matched_this_turn 0                                                        ; Number of agents person which find a job this turn
- 
-  set unemployement_rate_list []                                                        ; Here we store the unemployed rate and the vacancy rate 
-  set vacancy_rate_list []                                                              ; over several ticks in a "sliding window" fashion  
-  ;setup_params_bev
-  set indicator 0 
-  set number_array_max  20 ;; how many value we stock in arrays
-  set unemployement_array  []
-  set long_unemployement_array []
-  set happiness_worker_array []
-  set happiness_companies_array []
-  
- 
-  
 end
 
 ; Initialize the skills of the agents (person or company)
@@ -260,9 +401,21 @@ to setup_salary
   set salary (salaryMean + random_variation)
 end
 
-; Initialize the salary looked for by the agents (person or company)
-to setup_distance_preference
-  let random_variation (random distancePreferenceMaxFluctu)
-  set distance_pref (distancePreferenceMean + random_variation)
+
+
+to plot_beveridge
+  if (VacancyRateList_simulations != 0 and UnemployedRateList_simulations != 0) [
+    if (length VacancyRateList_simulations > 0 and length UnemployedRateList_simulations > 0) [
+      plotxy (last UnemployedRateList_simulations) (last VacancyRateList_simulations)
+    ]
+  ]
 end
+
+
+
+
+
+
+
+
 

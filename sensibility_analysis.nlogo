@@ -1,21 +1,27 @@
 __includes[
-  "code/turtles/companies.nls"
-  "code/turtles/matchings.nls"
-  "code/turtles/persons.nls"
 
-  "code/setup.nls"
-  "code/go.nls"
+  "code/setup_sensitive.nls"
+  "code/go_sensitive.nls"
   "code/affichage.nls"
   "code/measures.nls"
   "code/extend.nls"
-
-]
+  ]
 
 to setup
   clear-all
 
-  setup_sliders_globals ; Use the slider's value in the graphical interface
-  setup_simulation           ; Initialize the simulation variable
+  setup_sliders_globals            ; Use the slider's value in the graphical interface
+  setup_range_sensitivity_analysis ; Create the search space for the sensitivity analysis
+
+  set VacancyRateList_simulations []
+  set UnemployedRateList_simulations []
+
+  setup_simulation
+  set unemployement_array_parameter []
+     set long_unemployement_array_parameter []
+     set happiness_worker_array_parameter []
+     set happiness_companies_array_parameter []
+
 
 
     set Activate_optimized_matching_ false
@@ -42,14 +48,14 @@ to setup
   reset-ticks
 end
 
-to go
 
-  go_simulation
+;to-report stop_simulations?
+ ; set stop_simulations stop_simulations_
+  ;report stop_simulations
+;end
 
-end
 
-
-; Report the sliders variables (XXXX_) to the simulation's variable (XXXX)
+; Report the sliders variables (XXXX_) to the simulation's variable (XXXX) (only for the base model)
 to setup_sliders_globals
 
   set salaryMean salaryMean_
@@ -67,16 +73,42 @@ to setup_sliders_globals
   set Compagny_Number Compagny_Number_
   set Rseed Rseed_
 
-  set time_window time_window_
+
+  set n_sub_simu n_sub_simu_
+  set time_window time_windows_
+  set n_ticks_max n_ticks_max_
+  set epsilon epsilon_
+  set stop_simulations stop_simulations_
+
+  set sensibility_parameter_1 sensibility_parameter_1_
+  set min_param_1 min List min_param_1_ max_param_1_
+  set max_param_1 max List min_param_1_ max_param_1_
+  set step_param_1 step_param_1_
+
+  set sensibility_parameter_2 sensibility_parameter_2_
+  set min_param_2 min List min_param_2_ max_param_2_
+  set max_param_2 max List min_param_2_ max_param_2_
+  set step_param_2 step_param_2_
+
+  set sensibility_parameter_3 sensibility_parameter_3_
+  set min_param_3 min List min_param_3_ max_param_3_
+  set max_param_3 max List min_param_3_ max_param_3_
+  set step_param_3 step_param_3_
 
 end
 
 
-to update_bev
+to-report stop_simulations?
+  set stop_simulations stop_simulations_
+  report stop_simulations
+end
 
- show indicator
- set indicator 1
- show indicator
+to go
+  go_simulations                   ; run the simulations
+
+  if stop_simulations_ [
+    stop
+  ]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -115,7 +147,7 @@ Person_Number_
 Person_Number_
 0
 500
-100.0
+300.0
 10
 1
 NIL
@@ -130,17 +162,17 @@ Compagny_Number_
 Compagny_Number_
 0
 500
-150.0
+300.0
 10
 1
 NIL
 HORIZONTAL
 
 BUTTON
-358
-481
-441
-529
+282
+443
+365
+491
 NIL
 setup
 NIL
@@ -154,13 +186,13 @@ NIL
 1
 
 BUTTON
-465
-479
-584
-528
+382
+444
+461
+493
 NIL
 go
-T
+NIL
 1
 T
 OBSERVER
@@ -194,7 +226,7 @@ salaryMaxFluctu_
 salaryMaxFluctu_
 0
 100
-17.0
+19.0
 1
 1
 NIL
@@ -224,7 +256,7 @@ n_match_
 n_match_
 0
 100
-82.0
+10.0
 1
 1
 NIL
@@ -299,29 +331,11 @@ unexpected_firing_
 unexpected_firing_
 0
 0.5
-0.01
+0.1
 0.01
 1
 NIL
 HORIZONTAL
-
-PLOT
-879
-26
-1166
-203
-Beveridge curve
-NIL
-NIL
-0.0
-1.0
-0.0
-1.0
-true
-true
-"" ""
-PENS
-"BC" 10.0 2 -13345367 true "" "plot_beveridge"
 
 SLIDER
 6
@@ -332,7 +346,7 @@ firing_quality_threshold_
 firing_quality_threshold_
 0
 1
-0.7
+0.5
 0.1
 1
 NIL
@@ -354,10 +368,10 @@ NIL
 HORIZONTAL
 
 INPUTBOX
-1092
-511
-1156
-571
+27
+615
+91
+675
 Rseed_
 1.0
 1
@@ -365,10 +379,10 @@ Rseed_
 Number
 
 SWITCH
-354
-542
-482
-575
+104
+612
+232
+645
 linksVisible
 linksVisible
 0
@@ -376,104 +390,301 @@ linksVisible
 -1000
 
 SWITCH
-487
-542
-603
-575
+104
+648
+232
+681
 colorVisible
 colorVisible
 0
 1
 -1000
 
-MONITOR
-708
-253
-797
-298
-vacancy_rate
-vacancy_rate
-17
-1
-11
-
-MONITOR
-706
-304
-837
-349
-unemployement_rate
-unemployment_rate
-17
-1
-11
-
-SLIDER
-7
-359
-130
-392
-time_window_
-time_window_
+CHOOSER
+277
+510
+464
+555
+sensibility_parameter_1_
+sensibility_parameter_1_
+"Number of persons" "Number of companies" "Exceptional matching" "Matching quality threshold" "Maximum productivity fluctuation" "Firing quality threshold" "Unexpected firing" "Salary maximum fluctuation" "Salary mean" "Unexpected company motivation" "Unexpeted worker motivation" "Number of different skills" "NOTHING"
 0
-50
-50.0
-1
-1
-NIL
-HORIZONTAL
 
-SLIDER
-6
-87
-203
-120
-long_time_unemployed
-long_time_unemployed
-0
-50
-50.0
+CHOOSER
+274
+584
+464
+629
+sensibility_parameter_2_
+sensibility_parameter_2_
+"Number of persons" "Number of companies" "Exceptional matching" "Matching quality threshold" "Maximum productivity fluctuation" "Firing quality threshold" "Unexpected firing" "Salary maximum fluctuation" "Salary mean" "Unexpected company motivation" "Unexpeted worker motivation" "Number of different skills" "NOTHING"
 1
-1
-NIL
-HORIZONTAL
 
-PLOT
-709
-18
-1367
-241
-Rates
-NIL
-NIL
-0.0
-1.0
-0.0
-1.0
-true
-true
-"" ""
-PENS
-"unemployment rate " 1.0 0 -11783835 true "" "plot unemployment_rate "
-"Vacancy rate" 1.0 0 -2674135 true "" "plot vacancy_rate"
+CHOOSER
+277
+651
+467
+696
+sensibility_parameter_3_
+sensibility_parameter_3_
+"Number of persons" "Number of companies" "Exceptional matching" "Matching quality threshold" "Maximum productivity fluctuation" "Firing quality threshold" "Unexpected firing" "Salary maximum fluctuation" "Salary mean" "Unexpected company motivation" "Unexpeted worker motivation" "Number of different skills" "NOTHING"
+5
 
 INPUTBOX
-1164
-512
-1313
-572
-max_tick
-0.0
+470
+502
+560
+562
+min_param_1_
+10.0
 1
 0
 Number
 
+INPUTBOX
+564
+502
+650
+562
+max_param_1_
+10.0
+1
+0
+Number
+
+INPUTBOX
+654
+502
+740
+562
+step_param_1_
+1.0
+1
+0
+Number
+
+INPUTBOX
+471
+572
+561
+632
+min_param_2_
+10.0
+1
+0
+Number
+
+INPUTBOX
+565
+572
+652
+632
+max_param_2_
+10.0
+1
+0
+Number
+
+INPUTBOX
+655
+572
+741
+632
+step_param_2_
+1.0
+1
+0
+Number
+
+INPUTBOX
+472
+640
+560
+700
+min_param_3_
+0.1
+1
+0
+Number
+
+INPUTBOX
+565
+641
+652
+701
+max_param_3_
+1.0
+1
+0
+Number
+
+INPUTBOX
+656
+641
+742
+701
+step_param_3_
+0.1
+1
+0
+Number
+
+SWITCH
+513
+448
+698
+481
+stop_simulations_
+stop_simulations_
+0
+1
+-1000
+
+SLIDER
+700
+233
+835
+266
+time_windows_
+time_windows_
+0
+100
+100.0
+1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+701
+193
+835
+226
+n_ticks_max_
+n_ticks_max_
+100
+1500
+1440.0
+10
+1
+NIL
+HORIZONTAL
+
+SLIDER
+701
+275
+834
+308
+epsilon_
+epsilon_
+0
+0.3
+0.1
+0.05
+1
+NIL
+HORIZONTAL
+
+MONITOR
+704
+139
+761
+184
+NIL
+Rseed
+2
+1
+11
+
 PLOT
-1106
-248
-1367
-420
-HF rates
+833
+12
+1366
+183
+sensitive Beveridge 
+Unemployement rate
+Vacancy rate
+0.0
+0.1
+0.0
+0.1
+true
+true
+"" ""
+PENS
+
+SLIDER
+701
+311
+834
+344
+n_sub_simu_
+n_sub_simu_
+1
+20
+5.0
+1
+1
+NIL
+HORIZONTAL
+
+PLOT
+836
+184
+1126
+364
+unemplyment sensitive
+NIL
+NIL
+0.0
+1.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"unemployment_rate" 1.0 0 -10022847 true "" "plot unemployment_rate"
+
+SLIDER
+859
+692
+1036
+725
+long_time_unemployed
+long_time_unemployed
+0
+50
+10.0
+1
+1
+NIL
+HORIZONTAL
+
+PLOT
+1126
+184
+1416
+364
+vacancy sensitive
+NIL
+NIL
+0.0
+1.0
+0.0
+1.0
+true
+false
+"" ""
+PENS
+"vacancy_rate" 1.0 0 -4757638 true "" "plot vacancy_rate"
+
+PLOT
+878
+363
+1374
+513
+measures
 NIL
 NIL
 0.0
@@ -484,39 +695,19 @@ true
 true
 "" ""
 PENS
-"Hiring Rate" 1.0 0 -14439633 true "" "plot hiring_rate\n    "
-"firing Rate" 1.0 0 -2674135 true "" "plot firing_rate"
+"firing_rate" 1.0 0 -5298144 true "" "plot firing_rate"
+"hiring_rate" 1.0 0 -14439633 true "" "plot hiring_rate"
 
-SWITCH
-1146
-469
-1324
-502
-stop_simulations
-stop_simulations
+MONITOR
+772
+428
+850
+473
+NIL
+firing_rate
+17
 1
-1
--1000
-
-TEXTBOX
-705
-444
-855
-462
-test parameters sensitives
 11
-0.0
-1
-
-TEXTBOX
-367
-447
-517
-465
-launch a single simulation
-11
-0.0
-1
 
 @#$#@#$#@
 ## WHAT IS IT?
