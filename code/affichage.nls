@@ -17,8 +17,9 @@ end
 
 
 ; comment engager un employé
-to hire_employee [the_person]  
-  set people_matched_this_turn (people_matched_this_turn + 1)
+to hire_employee [the_person] 
+  if [haveJob] of the_person = False  
+  [set people_matched_this_turn (people_matched_this_turn + 1)]
   ; TODO increase unemployed_matched_this_turn if person is unemployed before hire
   set haveEmployee True
   set employee the_person
@@ -166,6 +167,42 @@ end
       set-plot-x-range 0 (precision (1.2 * ceiling (max UnemployedRateList_simulations)) 1)
       ]
     ]
+  
+    set-current-plot "unemplyment sensitive"
+
+    create-temporary-plot-pen (word "Param 3 = " precision value_param_3 2)  
+    set-plot-pen-color basic_maping_to_rgb value_param_3 min_param_3 max_param_3
+
+    if (UnemployedRateList_simulations != 0) [
+      if (length UnemployedRateList_simulations > 0) [  
+        set-plot-pen-mode 2
+        foreach (n-values (length UnemployedRateList_simulations) [n -> n] )[x ->     
+          plotxy (item x UnemployedRateList_simulations)(value_param_3) 
+        ]
+      ]
+       if (UnemployedRateList_simulations != 0 and length UnemployedRateList_simulations > 1) [
+
+      let temp_list best_fit UnemployedRateList_simulations value_param_3
+      let a (item 0 temp_list)
+      let b (item 1 temp_list)    
+
+      create-temporary-plot-pen (word "Param 3 = " precision value_param_3 2 " -- fit")      
+      set-plot-pen-color basic_maping_to_rgb value_param_3 min_param_3 max_param_3
+      plot-pen-reset
+
+      set-plot-pen-mode 0  
+      let i 0.0001    
+      while [i < 1.3] [
+        if ( (a * (ln i) + b) < ln (1.3 * ceiling (value_param_3))) [ ; To avoid unnecessary overflow
+          plotxy ( i) ( e ^ (a * (ln i) + b))  
+        ]
+        set i i + 0.01      
+      ]
+
+      set-plot-y-range 0 (precision (1.2 * ceiling (value_param_3)) 1)
+      set-plot-x-range 0 (precision (1.2 * ceiling (max UnemployedRateList_simulations)) 1)
+      ]
+  ]
   
   
 

@@ -256,7 +256,7 @@ n_match_
 n_match_
 0
 100
-10.0
+71.0
 1
 1
 NIL
@@ -436,7 +436,7 @@ INPUTBOX
 560
 562
 min_param_1_
-10.0
+100.0
 1
 0
 Number
@@ -447,7 +447,7 @@ INPUTBOX
 650
 562
 max_param_1_
-10.0
+100.0
 1
 0
 Number
@@ -469,7 +469,7 @@ INPUTBOX
 561
 632
 min_param_2_
-10.0
+100.0
 1
 0
 Number
@@ -480,7 +480,7 @@ INPUTBOX
 652
 632
 max_param_2_
-10.0
+100.0
 1
 0
 Number
@@ -622,7 +622,7 @@ n_sub_simu_
 n_sub_simu_
 1
 20
-5.0
+20.0
 1
 1
 NIL
@@ -644,7 +644,6 @@ true
 false
 "" ""
 PENS
-"unemployment_rate" 1.0 0 -10022847 true "" "plot unemployment_rate"
 
 SLIDER
 859
@@ -680,10 +679,10 @@ PENS
 "vacancy_rate" 1.0 0 -4757638 true "" "plot vacancy_rate"
 
 PLOT
-878
+865
 363
 1374
-513
+636
 measures
 NIL
 NIL
@@ -701,7 +700,7 @@ PENS
 MONITOR
 772
 428
-850
+853
 473
 NIL
 firing_rate

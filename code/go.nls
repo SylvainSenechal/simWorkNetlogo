@@ -159,12 +159,14 @@ to go_globals
   set natural_unemployement ( frictional_unemployement_rate  + structural_unemployement) ; Global unemployement level 
   if unemployment_level != 0 [
     set hiring_rate (people_matched_this_turn / unemployment_level)
-    show hiring_rate
+   
   ] 
   
     
   if labor_force != 0 [
   set firing_rate (employed_fired_this_turn /(labor_force - unemployment_level) )
+    
+    
   ]                                                                                       ; Here we store the unemployed rate and the vacancy rate over several ticks in a "sliding window" fashion
   ifelse (time_window <= 0 or ticks < time_window) [                                     ; When not enough values are strored, it keep storing them
     set unemployement_rate_list lput unemployment_rate  unemployement_rate_list

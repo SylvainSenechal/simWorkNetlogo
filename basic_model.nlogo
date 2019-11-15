@@ -299,7 +299,7 @@ unexpected_firing_
 unexpected_firing_
 0
 0.5
-0.01
+0.06
 0.01
 1
 NIL
@@ -332,7 +332,7 @@ firing_quality_threshold_
 firing_quality_threshold_
 0
 1
-0.7
+0.1
 0.1
 1
 NIL

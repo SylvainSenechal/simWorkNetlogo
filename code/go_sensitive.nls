@@ -5,7 +5,7 @@
 
 ; Run a sole simulation. Keep calling it if you want several tick to be run.
 to go_simulation
-  
+  set employed_fired_this_turn 0
   ask persons[
     go_one_person 
   ]
@@ -15,6 +15,7 @@ to go_simulation
   ask matchings [
     go_one_matching
   ]
+  
   
   init_links
   init_color
@@ -137,7 +138,9 @@ end
 to go_globals
   
   let working_force count persons with [haveJob]                                         ; The number of employed agents person
+
   set unemployment_level count persons with [not haveJob]                                ; The number of unemployed agents person 
+  
   set labor_force (working_force + unemployment_level)                                   ; The number of agents person having or looking for a job
   if labor_force != 0[
     set unemployment_rate ( unemployment_level /   labor_force)                         ; The proportion of non-working agents person
@@ -152,11 +155,13 @@ to go_globals
   set natural_unemployement ( frictional_unemployement_rate  + structural_unemployement) ; Global unemployement level 
   
   if unemployment_level != 0 [
-    set hiring_rate (people_matched_this_turn / unemployment_level)
+    set hiring_rate (people_matched_this_turn / (unemployment_level + people_matched_this_turn))
+    
   ] 
     
   if labor_force != 0 and labor_force - unemployment_level != 0 [
-  set firing_rate (employed_fired_this_turn /(labor_force - unemployment_level) )
+    set firing_rate (employed_fired_this_turn / (working_force + employed_fired_this_turn) )
+   
   ]                                                                                      ; Here we store the unemployed rate and the vacancy rate over several ticks in a "sliding window" fashion
   ifelse (time_window <= 0 or ticks < time_window) [                                     ; When not enough values are strored, it keep storing them
     set unemployement_rate_list lput unemployment_rate unemployement_rate_list
@@ -234,6 +239,7 @@ to go_simulations
                                                           ; Accumulators to compute average moving means
         let vac_rate 0                                    ; vacancy rate
         let unem_rate 0                                   ; unemployement rate
+        
         
                                                           ;for sensibility of parameters
         let happy_work 0                                  ; 
