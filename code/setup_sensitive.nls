@@ -129,6 +129,8 @@ globals[
   
  unemployement_array_parameter
  vacancy_array_parameter
+ firing_array_parameter
+ hiring_array_parameter
  long_unemployement_array_parameter
  happiness_worker_array_parameter
  happiness_companies_array_parameter

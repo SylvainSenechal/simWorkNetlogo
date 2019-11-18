@@ -539,7 +539,7 @@ SWITCH
 481
 stop_simulations_
 stop_simulations_
-0
+1
 1
 -1000
 
@@ -675,7 +675,7 @@ NIL
 0.0
 1.0
 0.0
-0.1
+0.2
 true
 false
 "" ""
@@ -691,9 +691,9 @@ measures
 NIL
 NIL
 0.0
-1.0
+0.5
 0.0
-0.2
+0.05
 true
 true
 "" ""
