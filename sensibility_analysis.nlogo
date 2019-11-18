@@ -18,6 +18,9 @@ to setup
 
   setup_simulation
   set unemployement_array_parameter []
+  set vacancy_array_parameter []
+  set firing_array_parameter []
+  set hiring_array_parameter []
      set long_unemployement_array_parameter []
      set happiness_worker_array_parameter []
      set happiness_companies_array_parameter []
@@ -447,7 +450,7 @@ INPUTBOX
 650
 562
 max_param_1_
-100.0
+400.0
 1
 0
 Number
@@ -458,7 +461,7 @@ INPUTBOX
 740
 562
 step_param_1_
-1.0
+100.0
 1
 0
 Number
@@ -480,7 +483,7 @@ INPUTBOX
 652
 632
 max_param_2_
-100.0
+400.0
 1
 0
 Number
@@ -491,7 +494,7 @@ INPUTBOX
 741
 632
 step_param_2_
-1.0
+100.0
 1
 0
 Number
@@ -524,7 +527,7 @@ INPUTBOX
 742
 701
 step_param_3_
-0.1
+0.2
 1
 0
 Number
@@ -639,11 +642,12 @@ NIL
 0.0
 1.0
 0.0
-1.0
+0.1
 true
 false
 "" ""
 PENS
+"pen-0" 1.0 0 -7500403 true "" "unemployement_param3\n"
 
 SLIDER
 859
@@ -671,12 +675,12 @@ NIL
 0.0
 1.0
 0.0
-1.0
+0.1
 true
 false
 "" ""
 PENS
-"vacancy_rate" 1.0 0 -4757638 true "" "plot vacancy_rate"
+"pen-0" 1.0 0 -10873583 true "" "vacancy_param3"
 
 PLOT
 865
@@ -689,13 +693,13 @@ NIL
 0.0
 1.0
 0.0
-1.0
+0.2
 true
 true
 "" ""
 PENS
-"firing_rate" 1.0 0 -5298144 true "" "plot firing_rate"
-"hiring_rate" 1.0 0 -14439633 true "" "plot hiring_rate"
+"firing_rate" 1.0 0 -5298144 true "" "firing_param3"
+"hiring_rate" 1.0 0 -14439633 true "" "hiring_param3"
 
 MONITOR
 772

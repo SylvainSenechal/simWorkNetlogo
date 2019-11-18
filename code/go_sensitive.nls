@@ -175,7 +175,11 @@ to go_globals
   
    ;; keep the 20 last measures
   ifelse (ticks > 20) [
+    
+    set vacancy_array lput (vacant_jobs / labor_force) but-first vacancy_array
     set unemployement_array  lput (unemployment_level / Labor_force) but-first unemployement_array
+    set firing_array lput (employed_fired_this_turn / (working_force + employed_fired_this_turn)) but-first firing_array
+    set hiring_array lput (people_matched_this_turn / (unemployment_level + people_matched_this_turn)) but-first hiring_array
     set long_unemployement_array lput  ((count persons with [ time_unemployed >= long_time_unemployed ] ) / Labor_force) but-first long_unemployement_array
     ;set happiness_worker_array lput persons_happiness but-first happiness_worker_array
     ;set happiness_companies_array lput companies_happiness but-first happiness_companies_array
@@ -185,6 +189,10 @@ to go_globals
   
   ;; for the differents plots
  set unemployement_array  lput ( unemployment_level / Labor_force) unemployement_array
+    
+ set vacancy_array lput ( vacant_jobs / labor_force)  vacancy_array
+ set firing_array lput ( employed_fired_this_turn / (working_force + employed_fired_this_turn)) firing_array
+ set hiring_rate lput (people_matched_this_turn / (unemployment_level + people_matched_this_turn)) hiring_array
  set long_unemployement_array lput  ((count persons with [ time_unemployed >= long_time_unemployed ] ) / Labor_force)  long_unemployement_array
  
  
@@ -201,6 +209,9 @@ to go_simulations
   let value_param_3 0
   
   set unemployement_array_beveridge []
+  set vacancy_array_beveridge []
+  set hiring_array_beveridge []
+  set firing_array_beveridge []
   set long_unemployement_array_beveridge []
   set happiness_worker_array_beveridge []
   set happiness_companies_array_beveridge []
@@ -245,8 +256,11 @@ to go_simulations
         let happy_work 0                                  ; 
         let happy_comp 0
         let long_unemp 0
-        let short_unemp 0     
-        
+        let short_unemp 0 
+        let short_vac 0    
+        let short_hiring 0
+        let short_firing 0
+       
         foreach (n-values n_sub_simu [ n -> n ]) [ s -> ; simulations will be repeated "n_sub_simu" times with different random seed       
           
           
@@ -283,20 +297,26 @@ to go_simulations
           ;set happy_work happy_work + (mean happiness_worker_array)
           ;set happy_comp happy_comp + (mean happiness_companies_array)
           ;set long_unemp long_unemp + (mean long_unemployement_array)
-          ;set short_unemp short_unemp + (mean unemployement_array)
+          set short_unemp short_unemp + (mean unemployement_array)
+          set short_vac short_vac + (mean vacancy_array)
+          set short_hiring short_hiring + (mean hiring_array) 
+          set short_firing short_firing + (mean firing_array) 
         ]
         ; True mean (over the "n_sub_simu" are now computed and stored
         set VacancyRateList_simulations lput (vac_rate / n_sub_simu) VacancyRateList_simulations
         set UnemployedRateList_simulations lput (unem_rate / n_sub_simu) UnemployedRateList_simulations
         
         set unemployement_array_beveridge lput( short_unemp / n_sub_simu) unemployement_array_beveridge
+        set vacancy_array_beveridge lput( short_vac / n_sub_simu) vacancy_array_beveridge
+        set hiring_array_beveridge lput( short_hiring / n_sub_simu) hiring_array_beveridge
+        set firing_array_beveridge lput( short_firing / n_sub_simu) firing_array_beveridge
         set long_unemployement_array_beveridge lput ( long_unemp / n_sub_simu) long_unemployement_array_beveridge
-       set happiness_worker_array_beveridge lput  ( happy_work / n_sub_simu) happiness_worker_array_beveridge
+        set happiness_worker_array_beveridge lput  ( happy_work / n_sub_simu) happiness_worker_array_beveridge
         set happiness_companies_array_beveridge lput ( happy_comp / n_sub_simu) happiness_companies_array_beveridge
         
        
         
-        show_sensitivity value_param_3
+        show_sensitivity value_param_3 value_param_1 value_param_2
       ] ; end of the param_2 loop
       
     ] ; end of the param_1 loop
@@ -305,6 +325,7 @@ to go_simulations
      set update_plot true 
     
      set unemployement_array_parameter lput ((mean unemployement_array_beveridge) / (length range_param_1 + length range_param_2)) unemployement_array_parameter
+     set vacancy_array_parameter lput ((mean vacancy_array_beveridge) / (length range_param_1 + length range_param_2)) vacancy_array_parameter
      set long_unemployement_array_parameter lput ((mean long_unemployement_array_beveridge) / (length range_param_1 + length range_param_2)) long_unemployement_array_parameter
      set happiness_worker_array_parameter lput  ((mean happiness_worker_array_beveridge) / (length range_param_1 + length  range_param_2)) happiness_worker_array_parameter
      set happiness_companies_array_parameter lput ((mean happiness_companies_array_beveridge ) / (length range_param_1 + length range_param_2)) happiness_companies_array_parameter

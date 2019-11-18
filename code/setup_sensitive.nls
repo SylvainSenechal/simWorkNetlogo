@@ -77,6 +77,9 @@ globals[
   employed_fired_this_turn
   hiring_rate
   firing_rate
+  vacancy_array
+  firing_array
+  hiring_array
     
   time_window                      ; Size of the "slidding window" used by the moving mean(s)
  
@@ -116,11 +119,16 @@ globals[
   happiness_companies_array
   
   unemployement_array_beveridge  
+  vacancy_array_beveridge
+  hiring_array_beveridge 
+  firing_array_beveridge
   long_unemployement_array_beveridge  
   happiness_worker_array_beveridge    
   happiness_companies_array_beveridge
   
+  
  unemployement_array_parameter
+ vacancy_array_parameter
  long_unemployement_array_parameter
  happiness_worker_array_parameter
  happiness_companies_array_parameter
@@ -285,6 +293,9 @@ to setup_globals
   
   set number_array_max  20 ;; how many value we stock in arrays
  set unemployement_array  []
+  set vacancy_array []
+  set firing_array []
+  set hiring_array []
  set long_unemployement_array []
  set happiness_worker_array []
  set happiness_companies_array []
