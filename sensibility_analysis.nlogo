@@ -371,7 +371,7 @@ INPUTBOX
 922
 620
 weight_skill_person
-1.0
+0.2
 1
 0
 Number
@@ -382,7 +382,7 @@ INPUTBOX
 922
 680
 weight_salary_person
-1.0
+0.6
 1
 0
 Number
@@ -393,7 +393,7 @@ INPUTBOX
 922
 739
 weight_distance_person
-1.0
+0.2
 1
 0
 Number
@@ -438,7 +438,7 @@ SWITCH
 540
 Activate_optimized_matching
 Activate_optimized_matching
-1
+0
 1
 -1000
 
@@ -547,7 +547,7 @@ INPUTBOX
 650
 562
 max_param_1_
-400.0
+300.0
 1
 0
 Number
@@ -580,7 +580,7 @@ INPUTBOX
 652
 632
 max_param_2_
-400.0
+300.0
 1
 0
 Number
@@ -636,7 +636,7 @@ SWITCH
 481
 stop_simulations_
 stop_simulations_
-0
+1
 1
 -1000
 
