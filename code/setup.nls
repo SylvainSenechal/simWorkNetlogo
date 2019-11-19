@@ -63,6 +63,9 @@ globals[
   epsilon                          ; Maximum deviation from the moving mean(s) allowed
   VacancyRateList_simulations      ; Final vacancy_rate values over simulations  
   UnemployedRateList_simulations   ; Final unemployement_rate values over simulations  
+  vacancy_array_parameter
+  hiring_array_parameter
+  firing_array_parameter
 
   
   

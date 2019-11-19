@@ -27,7 +27,7 @@ to setup
 
 
 
-    set Activate_optimized_matching_ false
+    set Activate_optimized_matching_ Activate_optimized_matching
     set Activate_appendice_ false
 
     set Optimized_resignation_ false
@@ -355,6 +355,103 @@ firing_quality_threshold_
 NIL
 HORIZONTAL
 
+TEXTBOX
+812
+544
+993
+572
+weight for preference of atribute
+11
+0.0
+1
+
+INPUTBOX
+767
+560
+922
+620
+weight_skill_person
+1.0
+1
+0
+Number
+
+INPUTBOX
+767
+620
+922
+680
+weight_salary_person
+1.0
+1
+0
+Number
+
+INPUTBOX
+767
+679
+922
+739
+weight_distance_person
+1.0
+1
+0
+Number
+
+INPUTBOX
+921
+560
+1054
+620
+weight_skill_companies
+1.0
+1
+0
+Number
+
+INPUTBOX
+922
+620
+1054
+680
+weight_salary_companies
+1.0
+1
+0
+Number
+
+INPUTBOX
+922
+679
+1058
+739
+weight_distance_companies
+1.0
+1
+0
+Number
+
+SWITCH
+808
+507
+1054
+540
+Activate_optimized_matching
+Activate_optimized_matching
+1
+1
+-1000
+
+TEXTBOX
+861
+490
+1011
+508
+Optimized_matching
+11
+0.0
+1
+
 SLIDER
 7
 286
@@ -527,7 +624,7 @@ INPUTBOX
 742
 701
 step_param_3_
-0.2
+0.1
 1
 0
 Number
@@ -539,15 +636,15 @@ SWITCH
 481
 stop_simulations_
 stop_simulations_
-1
+0
 1
 -1000
 
 SLIDER
-700
-233
-835
-266
+692
+101
+827
+134
 time_windows_
 time_windows_
 0
@@ -559,25 +656,25 @@ NIL
 HORIZONTAL
 
 SLIDER
-701
-193
-835
-226
+693
+67
+827
+100
 n_ticks_max_
 n_ticks_max_
 100
 1500
-1440.0
+1500.0
 10
 1
 NIL
 HORIZONTAL
 
 SLIDER
-701
-275
-834
-308
+692
+135
+825
+168
 epsilon_
 epsilon_
 0
@@ -589,10 +686,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-704
-139
-761
-184
+697
+14
+754
+59
 NIL
 Rseed
 2
@@ -600,10 +697,10 @@ Rseed
 11
 
 PLOT
-833
-12
-1366
-183
+877
+10
+1365
+286
 sensitive Beveridge 
 Unemployement rate
 Vacancy rate
@@ -617,10 +714,10 @@ true
 PENS
 
 SLIDER
-701
-311
-834
-344
+693
+170
+826
+203
 n_sub_simu_
 n_sub_simu_
 1
@@ -632,61 +729,46 @@ NIL
 HORIZONTAL
 
 PLOT
-836
-184
-1126
-364
+1069
+492
+1433
+672
 unemplyment sensitive
 NIL
 NIL
 0.0
 1.0
 0.0
-0.1
+0.07
 true
 false
 "" ""
 PENS
-"pen-0" 1.0 0 -7500403 true "" "unemployement_param3\n"
-
-SLIDER
-859
-692
-1036
-725
-long_time_unemployed
-long_time_unemployed
-0
-50
-10.0
-1
-1
-NIL
-HORIZONTAL
+"pen-0" 1.0 0 -13345367 true "" "unemployement_param3\n"
 
 PLOT
-1126
-184
-1416
-364
+778
+285
+1068
+465
 vacancy sensitive
 NIL
 NIL
 0.0
 1.0
 0.0
-0.2
+0.15
 true
 false
 "" ""
 PENS
-"pen-0" 1.0 0 -10873583 true "" "vacancy_param3"
+"pen-0" 1.0 0 -3844592 true "" "vacancy_param3"
 
 PLOT
-865
-363
-1374
-636
+1067
+285
+1436
+493
 measures
 NIL
 NIL
@@ -702,10 +784,10 @@ PENS
 "hiring_rate" 1.0 0 -14439633 true "" "hiring_param3"
 
 MONITOR
-772
-428
-853
-473
+780
+240
+861
+285
 NIL
 firing_rate
 17

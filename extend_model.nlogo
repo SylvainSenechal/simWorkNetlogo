@@ -1,14 +1,12 @@
 ;__includes["code/setup.nls" "code/go.nls" "code/affichage.nls" "code/measures.nls" "code/extend.nls" ]
 __includes[
-  "code/turtles/companies.nls"
-  "code/turtles/matchings.nls"
-  "code/turtles/persons.nls"
 
-  "code/setup.nls"
-  "code/go.nls"
+  "code/extend.nls"
+  "code/setup_sensitive.nls"
+  "code/go_sensitive.nls"
   "code/affichage.nls"
   "code/measures.nls"
-  "code/extend.nls"
+
 ]
 
 to setup
@@ -45,10 +43,18 @@ to setup
   reset-ticks
 end
 
+
 to go
+  go_simulations                   ; run the simulations
 
-  go_simulation
+  if stop_simulations_ [
+    stop
+  ]
+end
 
+to-report stop_simulations?
+  set stop_simulations stop_simulations_
+  report stop_simulations
 end
 
 
@@ -76,27 +82,11 @@ end
 
 
 
-
-
-to plot_beveridge
-
-  if indicator != 0 [
-
-    if ( vacancy_rate_list != 0 and unemployement_rate_list != 0) [
-      if (length  vacancy_rate_list > 0 and length unemployement_rate_list > 0) [
-
-        plotxy (last unemployement_rate_list) (last  vacancy_rate_list)
-        show "je plot"
-        set indicator 0
-      ]
-    ]
-  ]
-end
 @#$#@#$#@
 GRAPHICS-WINDOW
-290
+308
 10
-688
+706
 409
 -1
 -1
@@ -304,11 +294,87 @@ unexpected_resignation
 NIL
 HORIZONTAL
 
+TEXTBOX
+906
+434
+1087
+462
+weight for preference of atribute
+11
+0.0
+1
+
+INPUTBOX
+898
+456
+1053
+516
+weight_skill_person
+1.0
+1
+0
+Number
+
+INPUTBOX
+1052
+456
+1207
+516
+weight_salary_person
+1.0
+1
+0
+Number
+
+INPUTBOX
+1205
+456
+1360
+516
+weight_distance_person
+1.0
+1
+0
+Number
+
+INPUTBOX
+898
+515
+1053
+575
+weight_skill_companies
+1.0
+1
+0
+Number
+
+INPUTBOX
+1052
+515
+1207
+575
+weight_salary_companies
+1.0
+1
+0
+Number
+
+INPUTBOX
+1206
+515
+1361
+575
+weight_distance_companies
+1.0
+1
+0
+Number
+
 SWITCH
-918
-354
-1102
-387
+897
+390
+1081
+423
 Optimized_resignation
 Optimized_resignation
 0
@@ -345,24 +411,6 @@ unexpected_firing_
 NIL
 HORIZONTAL
 
-PLOT
-879
-26
-1166
-203
-Beveridge curve
-NIL
-NIL
-0.0
-1.0
-0.0
-1.0
-true
-true
-"" ""
-PENS
-"BC" 10.0 2 -13345367 true "" "plot_beveridge"
-
 SLIDER
 6
 250
@@ -394,10 +442,10 @@ NIL
 HORIZONTAL
 
 INPUTBOX
-27
-615
-91
-675
+274
+422
+338
+482
 Rseed_
 1.0
 1
@@ -405,10 +453,10 @@ Rseed_
 Number
 
 SWITCH
-104
-612
-232
-645
+357
+507
+485
+540
 linksVisible
 linksVisible
 0
@@ -416,10 +464,10 @@ linksVisible
 -1000
 
 SWITCH
-104
-648
-232
-681
+357
+540
+485
+573
 colorVisible
 colorVisible
 0
@@ -427,10 +475,10 @@ colorVisible
 -1000
 
 MONITOR
-795
-244
-884
-289
+1159
+230
+1248
+275
 vacancy_rate
 vacancy_rate
 17
@@ -438,10 +486,10 @@ vacancy_rate
 11
 
 MONITOR
-930
-246
-1061
-291
+1248
+230
+1379
+275
 unemployement_rate
 unemployment_rate
 17
@@ -449,10 +497,10 @@ unemployment_rate
 11
 
 SLIDER
-1092
-250
-1215
-283
+1119
+310
+1242
+343
 time_window_
 time_window_
 0
@@ -472,17 +520,17 @@ long_time_unemployed
 long_time_unemployed
 0
 50
-6.0
+28.0
 1
 1
 NIL
 HORIZONTAL
 
 PLOT
-709
-18
-1367
-241
+975
+10
+1381
+230
 Rates
 NIL
 NIL
@@ -498,10 +546,10 @@ PENS
 "Vacancy rate" 1.0 0 -2674135 true "" "plot vacancy_rate"
 
 INPUTBOX
-256
-618
-405
-678
+493
+507
+642
+567
 max_tick
 500.0
 1
@@ -509,10 +557,10 @@ max_tick
 Number
 
 PLOT
-1125
-298
-1386
-470
+712
+10
+973
+228
 HF rates
 NIL
 NIL
@@ -532,8 +580,8 @@ SWITCH
 87
 203
 120
-stop_simulations
-stop_simulations
+stop_simulations_
+stop_simulations_
 1
 1
 -1000
