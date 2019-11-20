@@ -5,7 +5,14 @@
 
 ; Run a sole simulation. Keep calling it if you want several tick to be run.
 to go_simulation
-  
+   
+  if too_long? [
+    
+     stop
+    ;; TODO save for bev and plot bev
+   ;; TODO add switch auto_iterate, if true, launch next simulation
+    
+  ]
   ask persons [
     go_one_person 
   ]
@@ -23,6 +30,8 @@ to go_simulation
  
   tick
   
+  
+  
 end
 
 
@@ -35,7 +44,8 @@ to go_one_person
   ifelse not haveJob [                             ; if the agent person has no job
     ask matching matchingAgentWhoNumber [      ; it asks for one to the matching agent
       ifelse (Activate_optimized_matching_ = true) [ ; HERE IF WE USE OPTIMIZED MATCHING
-        if (seekJob?) [
+        
+          if(seekJob?)[
           if not member? ([who] of myself) seekP [ ; which check first if the agent person is already in its list
             set seekP lput ([who] of myself) seekP ; and eventually add it to it.
           ]  
@@ -50,7 +60,8 @@ to go_one_person
     set time_unemployed time_unemployed + 1    ; At each tick we keep track of the time the agent person was unemployed
   ]
   [
-    if (Optimized_resignation_) [
+    if (Optimized_resignation_ = true) [
+      show "oui"
 
       optimized_resign    ; for the resignation extention du modéle question 2.1
     ]
@@ -114,14 +125,15 @@ to go_one_matching
     let simi_person 0
     let simi_company 0
     ; HERE IF WE USE OPTIMIZED MATCHING
-    ;ifelse (Activate_optimized_matching_ = true)[
-      ;set simi_person (optimized_similarity_person_to_company a_person a_company)  ; The similarity between an agent person and an agent company is computed
-      ;set simi_company (optimized_similarity_company_to_person a_company a_person) ; as well as between a company and a person 
-    ;]
-    ;[
+    ifelse (Activate_optimized_matching_ = true)[
+      show "enter"
+      set simi_person (optimized_similarity_person_to_company a_person a_company)  ; The similarity between an agent person and an agent company is computed
+      set simi_company (optimized_similarity_company_to_person a_company a_person) ; as well as between a company and a person 
+    ]
+    [
       set simi_person (similarity_person_to_company a_person a_company)  ; The similarity between an agent person and an agent company is computed
       set simi_company (similarity_company_to_person a_company a_person) ; as well as between a company and a person 
-    ;]
+    ]
     
     
     let close_enough ((abs (simi_person - simi_company)) <= exceptional_matching)      ; Then it assess that their similiratiies are on the same scale
@@ -158,13 +170,15 @@ to go_globals
   ]
   set natural_unemployement ( frictional_unemployement_rate  + structural_unemployement) ; Global unemployement level 
   if unemployment_level != 0 [
-    set hiring_rate (people_matched_this_turn / unemployment_level)
+    
+    set hiring_rate (people_matched_this_turn / (unemployment_level + people_matched_this_turn) )
+   
    
   ] 
   
     
-  if labor_force != 0 [
-  set firing_rate (employed_fired_this_turn /(labor_force - unemployment_level) )
+  if working_force != 0 [
+  set firing_rate (employed_fired_this_turn /(working_force + employed_fired_this_turn ) )
     
     
   ]                                                                                       ; Here we store the unemployed rate and the vacancy rate over several ticks in a "sliding window" fashion
@@ -201,12 +215,7 @@ to go_globals
    ;; TODO same than too_long ? (ie print bev or not ?)
   ]
   
-  if too_long? [
-   stop
-    ;; TODO save for bev and plot bev
-   ;; TODO add switch auto_iterate, if true, launch next simulation
-    
-  ]
+  
   
 end
 
@@ -219,7 +228,7 @@ end
 
 to-report too_long?
  
- if (ticks >= n_ticks_max) [
+ if (ticks > n_ticks_max) [
     report True
   ]
   report False
@@ -229,7 +238,7 @@ end
 ; si la PERSONS cherche un job ou pas
 to-report seekJob?
   let rand (random-float 1)
-  ifelse (rand < ( 1 / (1 - s_)))[ ; une chance de 1/(1 - s) de ne pas chercher de job à ce tour ci
+  ifelse (rand < ( 1 / 2))[ ; une chance de 1/(1 - s) de ne pas chercher de job à ce tour ci
       report false  ; non , on ne cherche pas de job
   ]
   [

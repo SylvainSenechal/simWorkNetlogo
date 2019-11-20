@@ -28,21 +28,21 @@ to setup
 
 
     set Activate_optimized_matching_ Activate_optimized_matching
-    set Activate_appendice_ false
+
 
     set Optimized_resignation_ false
     set Activate_perspective_ false
 
 
-    set weight_skill_person_ 0
-    set weight_distance_person_ 0
-    set weight_salary_person_ 0
+    set weight_skill_person_ weight_skill_person
+    set weight_distance_person_ weight_distance_person
+    set weight_salary_person_ weight_salary_person
 
-    set weight_skill_companies_ 0
-    set weight_distance_companies_ 0
-    set weight_salary_companies_ 0
+    set weight_skill_companies_ weight_skill_companies
+    set weight_distance_companies_ weight_distance_companies
+    set weight_salary_companies_ weight_salary_companies
 
-    set s_ 0
+
 
     set  unexpected_resignation_ 0
     set reconvertion_person_rate_ 0
@@ -636,7 +636,7 @@ SWITCH
 481
 stop_simulations_
 stop_simulations_
-1
+0
 1
 -1000
 
@@ -722,7 +722,7 @@ n_sub_simu_
 n_sub_simu_
 1
 20
-20.0
+2.0
 1
 1
 NIL

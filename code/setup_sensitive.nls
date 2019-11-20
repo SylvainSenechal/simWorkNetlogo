@@ -146,7 +146,7 @@ globals[
   weight_distance_companies_
   weight_salary_companies_
   
-  s_
+
   
   unexpected_resignation_
   reconvertion_person_rate_
@@ -383,9 +383,7 @@ to match_sensibility_name_variable [name value]
    if name = "unexpeted_resignation" [
     set unexpected_resignation_ value
   ]
-    if name = "s" [
-    set s_ value
-  ]
+    
      if name = "reconvertion_person_rate" [
     set reconvertion_person_rate_ value
   ]

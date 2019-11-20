@@ -94,12 +94,10 @@ to go_one_matching
   
   ;HERE THE APPENDICE A
   let n_treated 0
-  ifelse (Activate_appendice_)[
-    set n_treated (min (List (length seekP) (length seekC) M_value)) ; n_treated = la taille minimum entre seekP et seekC ;;;;;;;;;;;;;;;;; ICI QUE L'ON MODIFIE LE NOMBRE DE COUPLE DE MATCHING
-  ]
-  [
+  
+  
     set n_treated (min (List (length seekP) (length seekC) n_match)) ; It first determines the exact number (n_treated) of agents processed
-  ]                                                                 ;       (it is the minimum number between the matching agent capacity (n_match) and the lists of candidats)
+                                                                   ;       (it is the minimum number between the matching agent capacity (n_match) and the lists of candidats)
   let unemployed_treated n-of n_treated (shuffle seekP)            ; then it selects some agents in each lists (seekP and seekC)
   let recruitors_treated n-of n_treated (shuffle seekC)            ; and makes sure that they are ordered randomly (shuffle)
   
@@ -356,7 +354,7 @@ end
 ; si la PERSONS cherche un job ou pas
 to-report seekJob?
   let rand (random-float 1)
-  ifelse (rand < ( 1 / (1 - s_)))[ ; une chance de 1/(1 - s) de ne pas chercher de job à ce tour ci
+  ifelse (rand < ( 1 / 2 ))[ ; une chance de 1/(1 - s) de ne pas chercher de job à ce tour ci
       report false  ; non , on ne cherche pas de job
   ]
   [
@@ -369,7 +367,7 @@ to-report M_value
   set vacant_jobs count companies with [not haveEmployee] 
   let U count persons with [not haveJob]  
   ifelse (vacant_jobs  != 0)[
-    set M   vacant_jobs  * (1 - e ^ (- 1 * s_ * U / vacant_jobs ))
+    set M   vacant_jobs  * (1 - e ^ (- 1 * 0 * U / vacant_jobs ))
   ]
   [
     set M 10

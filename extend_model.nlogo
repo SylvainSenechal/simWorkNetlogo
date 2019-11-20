@@ -1,11 +1,14 @@
 ;__includes["code/setup.nls" "code/go.nls" "code/affichage.nls" "code/measures.nls" "code/extend.nls" ]
 __includes[
+  "code/turtles/companies.nls"
+  "code/turtles/matchings.nls"
+  "code/turtles/persons.nls"
 
-  "code/extend.nls"
-  "code/setup_sensitive.nls"
-  "code/go_sensitive.nls"
+  "code/setup.nls"
+  "code/go.nls"
   "code/affichage.nls"
   "code/measures.nls"
+  "code/extend.nls"
 
 ]
 
@@ -16,22 +19,22 @@ to setup
   setup_simulation           ; Initialize the simulation variable
 
 
-    set Activate_optimized_matching_ false
+    set Activate_optimized_matching_ Activate_optimized_matching
     set Activate_appendice_ false
 
-    set Optimized_resignation_ false
+    set Optimized_resignation_ Optimized_resignation
     set Activate_perspective_ false
 
 
-    set weight_skill_person_ 0
-    set weight_distance_person_ 0
-    set weight_salary_person_ 0
+    set weight_skill_person_ weight_skill_person
+    set weight_distance_person_ weight_distance_person
+    set weight_salary_person_  weight_salary_person
 
-    set weight_skill_companies_ 0
-    set weight_distance_companies_ 0
-    set weight_salary_companies_ 0
+    set weight_skill_companies_ weight_skill_companies
+    set weight_distance_companies_ weight_distance_companies
+    set weight_salary_companies_  weight_salary_companies
 
-    set s_ 0
+
 
     set  unexpected_resignation_ 0
     set reconvertion_person_rate_ 0
@@ -45,17 +48,14 @@ end
 
 
 to go
-  go_simulations                   ; run the simulations
+  go_simulation                  ; run the simulations
 
   if stop_simulations_ [
     stop
   ]
 end
 
-to-report stop_simulations?
-  set stop_simulations stop_simulations_
-  report stop_simulations
-end
+
 
 
 ; Report the sliders variables (XXXX_) to the simulation's variable (XXXX)
@@ -79,18 +79,15 @@ to setup_sliders_globals
   set time_window time_window_
 
 end
-
-
-
 @#$#@#$#@
 GRAPHICS-WINDOW
-308
+332
 10
-706
-409
+693
+372
 -1
 -1
-11.82
+10.7
 1
 10
 1
@@ -119,7 +116,7 @@ Person_Number_
 Person_Number_
 0
 500
-100.0
+10.0
 10
 1
 NIL
@@ -134,7 +131,7 @@ Compagny_Number_
 Compagny_Number_
 0
 500
-150.0
+10.0
 10
 1
 NIL
@@ -310,7 +307,7 @@ INPUTBOX
 1053
 516
 weight_skill_person
-1.0
+0.1
 1
 0
 Number
@@ -321,7 +318,7 @@ INPUTBOX
 1207
 516
 weight_salary_person
-1.0
+0.4
 1
 0
 Number
@@ -332,7 +329,7 @@ INPUTBOX
 1360
 516
 weight_distance_person
-1.0
+0.5
 1
 0
 Number
@@ -343,7 +340,7 @@ INPUTBOX
 1053
 575
 weight_skill_companies
-1.0
+0.1
 1
 0
 Number
@@ -354,7 +351,7 @@ INPUTBOX
 1207
 575
 weight_salary_companies
-1.0
+0.4
 1
 0
 Number
@@ -365,7 +362,7 @@ INPUTBOX
 1361
 575
 weight_distance_companies
-1.0
+0.5
 1
 0
 Number
@@ -377,7 +374,7 @@ SWITCH
 423
 Optimized_resignation
 Optimized_resignation
-0
+1
 1
 -1000
 
@@ -550,8 +547,8 @@ INPUTBOX
 507
 642
 567
-max_tick
-500.0
+n_ticks_max
+10.0
 1
 0
 Number
@@ -583,6 +580,17 @@ SWITCH
 stop_simulations_
 stop_simulations_
 1
+1
+-1000
+
+SWITCH
+1129
+390
+1368
+423
+Activate_optimized_matching
+Activate_optimized_matching
+0
 1
 -1000
 

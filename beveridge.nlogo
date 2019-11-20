@@ -469,6 +469,7 @@ to go_simulations
           stop
         ]
       ]
+
       ask turtles [die]
       set vac_rate (mean vacancy_rate_list)
       set unem_rate (mean unemployement_rate_list)
@@ -505,11 +506,11 @@ end
 
 to setup_globals_simulations
 
-  set maxNumberPerson max List maxNumberPerson_ minNumberPerson_
-  set minNumberPerson min List maxNumberPerson_ minNumberPerson_
+  set maxNumberPerson max List 450 100
+  set minNumberPerson min List 450 100
   set stepNumberPerson stepNumberPerson_
-  set maxNumberCompanies max List maxNumberCompanies_ minNumberCompanies_
-  set minNumberCompanies min List maxNumberCompanies_ minNumberCompanies_
+  set maxNumberCompanies max List 450 100
+  set minNumberCompanies min List 450 100
   set stepNumberCompanies stepNumberCompanies_
   set n_ticks_max n_ticks_max_
   set epsilon epsilon_
@@ -533,10 +534,12 @@ end
 
 
 to plot_beveridge
+
   if (VacancyRateList_simulations != 0 and UnemployedRateList_simulations != 0 ) [
     if (length VacancyRateList_simulations > 0 and length UnemployedRateList_simulations > 0) [
       if( Compagny_Number mod 100 = 0 and Person_Number mod 100 = 0 and hasConverged)
-      [plotxy (last UnemployedRateList_simulations) (last VacancyRateList_simulations)]
+       [
+      plotxy (last UnemployedRateList_simulations) (last VacancyRateList_simulations)]
     ]
   ]
 
@@ -633,10 +636,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-28
-133
-190
-166
+388
+530
+550
+563
 NIL
 setup_simulations
 NIL
@@ -650,10 +653,10 @@ NIL
 1
 
 BUTTON
-29
-175
-190
-208
+388
+566
+549
+599
 NIL
 go_simulations
 NIL
@@ -667,10 +670,10 @@ NIL
 0
 
 PLOT
-320
-545
-696
-674
+677
+524
+1053
+653
 Stat1
 NIL
 NIL
@@ -687,9 +690,9 @@ PENS
 
 SLIDER
 11
-268
-196
-301
+58
+181
+91
 salaryMean_
 salaryMean_
 0
@@ -701,10 +704,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-10
-301
-227
-334
+9
+103
+183
+136
 salaryMaxFluctu_
 salaryMaxFluctu_
 0
@@ -716,10 +719,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-10
-226
-182
-259
+11
+17
+183
+50
 n_skills_
 n_skills_
 1
@@ -731,10 +734,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-9
-480
-181
-513
+6
+272
+187
+305
 n_match_
 n_match_
 0
@@ -746,10 +749,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-8
-521
-264
-554
+5
+315
+187
+348
 matching_quality_threshold_
 matching_quality_threshold_
 0
@@ -761,10 +764,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-8
-553
-262
-586
+4
+357
+190
+390
 exceptional_matching_
 exceptional_matching_
 0
@@ -806,10 +809,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-11
-417
-234
-450
+6
+230
+187
+263
 unexpected_firing_
 unexpected_firing_
 0
@@ -821,10 +824,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-11
-351
-236
-384
+8
+145
+185
+178
 firing_quality_threshold_
 firing_quality_threshold_
 0
@@ -836,10 +839,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-11
-384
-238
-417
+7
+188
+185
+221
 max_productivity_fluctuation_
 max_productivity_fluctuation_
 0
@@ -862,10 +865,10 @@ Rseed
 Number
 
 SWITCH
-685
-147
-823
-180
+690
+146
+828
+179
 linksVisible
 linksVisible
 0
@@ -884,10 +887,10 @@ colorVisible
 -1000
 
 PLOT
-706
-549
-1051
-715
+705
+352
+1050
+518
 rate
 NIL
 %
@@ -943,25 +946,6 @@ PENS
 "natural_unemployement" 1.0 0 -16777216 true "" "plot natural_unemployement"
 "structural_unemployement" 1.0 0 -11033397 true "" "plot structural_unemployement"
 "frictional_unemployement" 1.0 0 -2064490 true "" "plot frictional_unemployement_rate"
-
-PLOT
-710
-396
-1082
-546
-Mobile mean
-NIL
-NIL
-0.0
-100.0
-0.0
-1.0
-true
-true
-"" ""
-PENS
-"Unemployement rate" 1.0 0 -16777216 true "" "if length unemployement_rate_list > 0 [plot  mean unemployement_rate_list]"
-"Vacancy rate" 1.0 0 -7500403 true "" "if length vacancy_rate_list > 0 [plot mean vacancy_rate_list]"
 
 SLIDER
 1083
@@ -1132,13 +1116,13 @@ PENS
 "BC" 10.0 2 -13345367 true "" "plot_beveridge"
 
 SWITCH
-25
-87
-203
-120
+376
+488
+554
+521
 stop_simulations
 stop_simulations
-1
+0
 1
 -1000
 

@@ -58,7 +58,7 @@ globals[
  ; Multiple simulations variables:
  
   n_sub_simu                       ; Number of simulation averaged to get one statistic value
-  n_ticks_max                      ; Maximum number of tick in a simulation
+  ;n_ticks_max                      ; Maximum number of tick in a simulation
   
   epsilon                          ; Maximum deviation from the moving mean(s) allowed
   VacancyRateList_simulations      ; Final vacancy_rate values over simulations  
@@ -120,15 +120,17 @@ globals[
   unexpected_resignation_
   reconvertion_person_rate_
   reconvertion_company_rate_
-  Activate_optimized_matching_ ; boolean if we activate the optimzed matching
+ 
   M ; for appendice a , the number of couple make / turn
   Activate_appendice_
   
 
   ; extention 
   
+  Activate_optimized_matching_ ; boolean if we activate the optimzed matching
   Optimized_resignation_  ; activate or not the resignation question 2.1
   Activate_perspective_   ; activate or not the perspective // not yet use 
+  
   
   ;extention of thibaut 
   distancePreferenceMaxFluctu ; ?
