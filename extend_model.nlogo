@@ -23,8 +23,7 @@ to setup
     set Activate_appendice_ false
 
     set Optimized_resignation_ Optimized_resignation
-    set Activate_perspective_ false
-
+    set Activate_reconversion_ Activate_reconversion
 
     set weight_skill_person_ weight_skill_person
     set weight_distance_person_ weight_distance_person
@@ -131,17 +130,17 @@ Compagny_Number_
 Compagny_Number_
 0
 500
-10.0
+60.0
 10
 1
 NIL
 HORIZONTAL
 
 BUTTON
-382
-448
-465
-496
+404
+378
+487
+426
 NIL
 setup
 NIL
@@ -155,10 +154,10 @@ NIL
 1
 
 BUTTON
-511
-449
-630
-498
+501
+379
+620
+428
 NIL
 go
 T
@@ -292,20 +291,71 @@ NIL
 HORIZONTAL
 
 TEXTBOX
-906
-434
-1087
-462
+916
+394
+1097
+422
 weight for preference of atribute
 11
 0.0
 1
 
+SLIDER
+716
+310
+914
+343
+reconvertion_person_rate
+reconvertion_person_rate
+0
+1
+0.1
+0.01
+1
+%
+HORIZONTAL
+
+SWITCH
+718
+270
+913
+303
+Activate_reconversion
+Activate_reconversion
+1
+1
+-1000
+
+TEXTBOX
+724
+248
+874
+266
+Perspective (reconversion)
+11
+0.0
+1
+
+SLIDER
+714
+348
+916
+381
+reconvertion_company_rate
+reconvertion_company_rate
+0
+1
+0.01
+0.01
+1
+%
+HORIZONTAL
+
 INPUTBOX
-898
-456
-1053
-516
+912
+418
+1067
+478
 weight_skill_person
 0.1
 1
@@ -313,10 +363,10 @@ weight_skill_person
 Number
 
 INPUTBOX
-1052
-456
-1207
-516
+1068
+419
+1223
+479
 weight_salary_person
 0.4
 1
@@ -324,10 +374,10 @@ weight_salary_person
 Number
 
 INPUTBOX
-1205
-456
-1360
-516
+1225
+419
+1380
+479
 weight_distance_person
 0.5
 1
@@ -335,10 +385,10 @@ weight_distance_person
 Number
 
 INPUTBOX
-898
-515
-1053
-575
+913
+481
+1068
+541
 weight_skill_companies
 0.1
 1
@@ -346,10 +396,10 @@ weight_skill_companies
 Number
 
 INPUTBOX
-1052
-515
-1207
-575
+1069
+481
+1224
+541
 weight_salary_companies
 0.4
 1
@@ -357,10 +407,10 @@ weight_salary_companies
 Number
 
 INPUTBOX
-1206
-515
-1361
-575
+1226
+481
+1381
+541
 weight_distance_companies
 0.5
 1
@@ -368,10 +418,10 @@ weight_distance_companies
 Number
 
 SWITCH
-897
-390
-1081
-423
+926
+272
+1110
+305
 Optimized_resignation
 Optimized_resignation
 1
@@ -450,10 +500,10 @@ Rseed_
 Number
 
 SWITCH
-357
-507
-485
-540
+424
+437
+552
+470
 linksVisible
 linksVisible
 0
@@ -461,10 +511,10 @@ linksVisible
 -1000
 
 SWITCH
-357
-540
-485
-573
+423
+473
+551
+506
 colorVisible
 colorVisible
 0
@@ -494,30 +544,15 @@ unemployment_rate
 11
 
 SLIDER
-1119
-310
-1242
-343
+164
+86
+277
+119
 time_window_
 time_window_
 0
 50
 50.0
-1
-1
-NIL
-HORIZONTAL
-
-SLIDER
-922
-310
-1119
-343
-long_time_unemployed
-long_time_unemployed
-0
-50
-28.0
 1
 1
 NIL
@@ -543,11 +578,11 @@ PENS
 "Vacancy rate" 1.0 0 -2674135 true "" "plot vacancy_rate"
 
 INPUTBOX
-493
-507
-642
-567
-n_ticks_max
+269
+488
+342
+548
+max_tick
 10.0
 1
 0
@@ -573,10 +608,10 @@ PENS
 "firing Rate" 1.0 0 -2674135 true "" "plot firing_rate"
 
 SWITCH
-25
-87
-203
-120
+7
+86
+161
+119
 stop_simulations_
 stop_simulations_
 1
@@ -584,15 +619,35 @@ stop_simulations_
 -1000
 
 SWITCH
-1129
-390
-1368
-423
+710
+417
+897
+450
 Activate_optimized_matching
 Activate_optimized_matching
 0
 1
 -1000
+
+TEXTBOX
+965
+252
+1115
+270
+resignation PERSON
+11
+0.0
+1
+
+TEXTBOX
+714
+398
+864
+416
+Perspective (preference )
+11
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?

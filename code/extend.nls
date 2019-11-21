@@ -1,4 +1,7 @@
 
+;; =================================================================
+;; FUNCTION FOR PERSPECTIVE (RESIGNATION)
+;; =================================================================
 
 
 ;for the resignation extention du modéle question 2.1
@@ -75,5 +78,45 @@ end
 to-report utility_function [number]
   report 1 / (1 + e ^ (10 * (0.5 - number)))
 end
+
+
+
+;; =================================================================
+;; FUNCTION FOR PERSPECTIVE (RECONVERSION)
+;; =================================================================
+
+
+to update_skill [a_person number_skills value]
+  ask a_person [ 
+    array:set skills number_skills (value)
+  ]
+end
+
+
+
+; is asking to a  COMPANY , he will may change his competences
+to reconversion_company 
+  foreach (n-values n_skills [ n -> n ]) [x ->
+    let skill (array:item skills x)
+    let rand random-float 1
+    if (rand < reconvertion_company_rate_) [
+      update_skill self x (1 - skill)
+    ]
+  ]
+end 
+
+
+; is asking to a PERSONS or a COMPANY , he will may change his competences
+to reconversion_person 
+  show "rec"
+  foreach (n-values n_skills [ n -> n ]) [x ->
+    let skill (array:item skills x)
+    let rand random-float 1
+    if (rand < reconvertion_person_rate_) [
+      update_skill self x (1 - skill)
+    ]
+  ]
+end 
+  
 
 

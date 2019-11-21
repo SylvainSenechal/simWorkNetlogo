@@ -22,7 +22,7 @@ to setup
     set Activate_appendice_ false
 
     set Optimized_resignation_ false
-    set Activate_perspective_ false
+    set Activate_reconversion_ false
 
 
     set weight_skill_person_ 0
@@ -44,7 +44,7 @@ end
 
 to go
 
-  go_simulation
+  go_simulations
 
 end
 
@@ -354,10 +354,10 @@ NIL
 HORIZONTAL
 
 INPUTBOX
-1092
-511
-1156
-571
+941
+471
+1005
+531
 Rseed_
 1.0
 1
@@ -387,10 +387,10 @@ colorVisible
 -1000
 
 MONITOR
-708
-253
-797
-298
+694
+237
+822
+282
 vacancy_rate
 vacancy_rate
 17
@@ -398,10 +398,10 @@ vacancy_rate
 11
 
 MONITOR
-706
-304
-837
-349
+691
+284
+822
+329
 unemployement_rate
 unemployment_rate
 17
@@ -416,8 +416,8 @@ SLIDER
 time_window_
 time_window_
 0
-50
-50.0
+2000
+1889.0
 1
 1
 NIL
@@ -439,10 +439,10 @@ NIL
 HORIZONTAL
 
 PLOT
-709
-18
-1367
-241
+719
+10
+1377
+233
 Rates
 NIL
 NIL
@@ -458,21 +458,21 @@ PENS
 "Vacancy rate" 1.0 0 -2674135 true "" "plot vacancy_rate"
 
 INPUTBOX
-1164
-512
-1313
-572
+870
+470
+937
+530
 max_tick
-0.0
+1000.0
 1
 0
 Number
 
 PLOT
-1106
-248
-1367
-420
+824
+236
+1377
+454
 HF rates
 NIL
 NIL
@@ -487,36 +487,37 @@ PENS
 "Hiring Rate" 1.0 0 -14439633 true "" "plot hiring_rate\n    "
 "firing Rate" 1.0 0 -2674135 true "" "plot firing_rate"
 
-SWITCH
-1146
-469
-1324
-502
-stop_simulations
-stop_simulations
-1
-1
--1000
-
-TEXTBOX
-705
-444
-855
-462
-test parameters sensitives
-11
-0.0
-1
-
 TEXTBOX
 367
 447
 517
 465
-launch a single simulation
+launch a basic simulation
 11
 0.0
 1
+
+MONITOR
+691
+331
+823
+376
+NIL
+hiring_rate
+17
+1
+11
+
+MONITOR
+691
+380
+822
+425
+NIL
+firing_rate
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?

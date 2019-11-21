@@ -5,6 +5,7 @@ __includes[
   "code/affichage.nls"
   "code/measures.nls"
   "code/extend.nls"
+
   ]
 
 to setup
@@ -21,32 +22,26 @@ to setup
   set vacancy_array_parameter []
   set firing_array_parameter []
   set hiring_array_parameter []
-     set long_unemployement_array_parameter []
-     set happiness_worker_array_parameter []
-     set happiness_companies_array_parameter []
 
 
-
-    set Activate_optimized_matching_ Activate_optimized_matching
-
-
-    set Optimized_resignation_ false
-    set Activate_perspective_ false
+  set Activate_optimized_matching_ Activate_optimized_matching
 
 
-    set weight_skill_person_ weight_skill_person
-    set weight_distance_person_ weight_distance_person
-    set weight_salary_person_ weight_salary_person
-
-    set weight_skill_companies_ weight_skill_companies
-    set weight_distance_companies_ weight_distance_companies
-    set weight_salary_companies_ weight_salary_companies
+  set Optimized_resignation_ Optimized_resignation
+  set Activate_reconversion_ Activate_reconversion
 
 
+  set weight_skill_person_ weight_skill_person
+  set weight_distance_person_ weight_distance_person
+  set weight_salary_person_ weight_salary_person
 
-    set  unexpected_resignation_ 0
-    set reconvertion_person_rate_ 0
-    set reconvertion_company_rate_ 0
+  set weight_skill_companies_ weight_skill_companies
+  set weight_distance_companies_ weight_distance_companies
+  set weight_salary_companies_ weight_salary_companies
+  set  unexpected_resignation_ 0
+  set reconvertion_person_rate_ reconvertion_person_rate
+  set reconvertion_company_rate_ reconvertion_company_rate
+
 
   reset-ticks
 end
@@ -117,11 +112,11 @@ end
 GRAPHICS-WINDOW
 290
 10
-688
-409
+665
+386
 -1
 -1
-11.82
+11.121212121212123
 1
 10
 1
@@ -172,10 +167,10 @@ NIL
 HORIZONTAL
 
 BUTTON
-282
-443
-365
-491
+348
+407
+431
+455
 NIL
 setup
 NIL
@@ -189,10 +184,10 @@ NIL
 1
 
 BUTTON
-382
-444
-461
-493
+440
+406
+519
+455
 NIL
 go
 NIL
@@ -206,10 +201,10 @@ NIL
 0
 
 SLIDER
-6
-166
-260
-199
+3
+127
+257
+160
 salaryMean_
 salaryMean_
 0
@@ -221,25 +216,25 @@ NIL
 HORIZONTAL
 
 SLIDER
-6
-202
-260
-235
+3
+165
+257
+198
 salaryMaxFluctu_
 salaryMaxFluctu_
 0
 100
-19.0
+20.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-6
-124
-260
-157
+5
+88
+259
+121
 n_skills_
 n_skills_
 1
@@ -251,10 +246,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-7
-404
-261
-437
+2
+313
+256
+346
 n_match_
 n_match_
 0
@@ -266,10 +261,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-6
-445
-261
-478
+0
+351
+255
+384
 matching_quality_threshold_
 matching_quality_threshold_
 0
@@ -281,10 +276,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-6
-477
-261
-510
+0
+385
+255
+418
 exceptional_matching_
 exceptional_matching_
 0
@@ -296,10 +291,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-8
-552
-261
-585
+2
+460
+255
+493
 unexpected_company_motivation_
 unexpected_company_motivation_
 0
@@ -311,10 +306,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-7
-518
-261
-551
+0
+421
+254
+454
 unexpected_worker_motivation_
 unexpected_worker_motivation_
 0
@@ -326,10 +321,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-6
-322
-259
-355
+3
+276
+256
+309
 unexpected_firing_
 unexpected_firing_
 0
@@ -341,10 +336,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-6
-250
-260
-283
+4
+202
+258
+235
 firing_quality_threshold_
 firing_quality_threshold_
 0
@@ -355,21 +350,83 @@ firing_quality_threshold_
 NIL
 HORIZONTAL
 
+SLIDER
+754
+651
+952
+684
+reconvertion_person_rate
+reconvertion_person_rate
+0
+1
+0.1
+0.01
+1
+%
+HORIZONTAL
+
+SWITCH
+754
+573
+949
+606
+Activate_reconversion
+Activate_reconversion
+1
+1
+-1000
+
 TEXTBOX
-812
-544
-993
-572
+724
+248
+874
+266
+Perspective (reconversion)
+11
+0.0
+1
+
+SLIDER
+753
+614
+955
+647
+reconvertion_company_rate
+reconvertion_company_rate
+0
+1
+0.1
+0.01
+1
+%
+HORIZONTAL
+
+SWITCH
+757
+516
+941
+549
+Optimized_resignation
+Optimized_resignation
+1
+1
+-1000
+
+TEXTBOX
+1132
+551
+1313
+579
 weight for preference of atribute
 11
 0.0
 1
 
 INPUTBOX
-767
-560
-922
-620
+1009
+570
+1138
+630
 weight_skill_person
 0.2
 1
@@ -377,10 +434,10 @@ weight_skill_person
 Number
 
 INPUTBOX
-767
-620
-922
-680
+1138
+569
+1264
+629
 weight_salary_person
 0.6
 1
@@ -388,10 +445,10 @@ weight_salary_person
 Number
 
 INPUTBOX
-767
-679
-922
-739
+1264
+569
+1396
+629
 weight_distance_person
 0.2
 1
@@ -399,10 +456,10 @@ weight_distance_person
 Number
 
 INPUTBOX
-921
-560
-1054
-620
+1005
+630
+1138
+690
 weight_skill_companies
 1.0
 1
@@ -410,10 +467,10 @@ weight_skill_companies
 Number
 
 INPUTBOX
-922
-620
-1054
-680
+1135
+629
+1267
+689
 weight_salary_companies
 1.0
 1
@@ -421,10 +478,10 @@ weight_salary_companies
 Number
 
 INPUTBOX
-922
-679
-1058
-739
+1267
+629
+1396
+689
 weight_distance_companies
 1.0
 1
@@ -432,10 +489,10 @@ weight_distance_companies
 Number
 
 SWITCH
-808
-507
-1054
-540
+1092
+514
+1338
+547
 Activate_optimized_matching
 Activate_optimized_matching
 0
@@ -443,20 +500,20 @@ Activate_optimized_matching
 -1000
 
 TEXTBOX
-861
-490
-1011
-508
-Optimized_matching
+1164
+497
+1314
+515
+Perspective(Preference)
 11
 0.0
 1
 
 SLIDER
-7
-286
-260
-319
+3
+240
+256
+273
 max_productivity_fluctuation_
 max_productivity_fluctuation_
 0
@@ -468,10 +525,10 @@ NIL
 HORIZONTAL
 
 INPUTBOX
-27
-615
-91
-675
+0
+571
+64
+631
 Rseed_
 1.0
 1
@@ -479,10 +536,10 @@ Rseed_
 Number
 
 SWITCH
-104
-612
-232
-645
+67
+570
+195
+603
 linksVisible
 linksVisible
 0
@@ -490,10 +547,10 @@ linksVisible
 -1000
 
 SWITCH
-104
-648
-232
-681
+67
+606
+195
+639
 colorVisible
 colorVisible
 0
@@ -502,19 +559,19 @@ colorVisible
 
 CHOOSER
 277
-510
+517
 464
-555
+562
 sensibility_parameter_1_
 sensibility_parameter_1_
 "Number of persons" "Number of companies" "Exceptional matching" "Matching quality threshold" "Maximum productivity fluctuation" "Firing quality threshold" "Unexpected firing" "Salary maximum fluctuation" "Salary mean" "Unexpected company motivation" "Unexpeted worker motivation" "Number of different skills" "NOTHING"
 0
 
 CHOOSER
-274
-584
+277
+586
 464
-629
+631
 sensibility_parameter_2_
 sensibility_parameter_2_
 "Number of persons" "Number of companies" "Exceptional matching" "Matching quality threshold" "Maximum productivity fluctuation" "Firing quality threshold" "Unexpected firing" "Salary maximum fluctuation" "Salary mean" "Unexpected company motivation" "Unexpeted worker motivation" "Number of different skills" "NOTHING"
@@ -522,18 +579,18 @@ sensibility_parameter_2_
 
 CHOOSER
 277
-651
+656
 467
-696
+701
 sensibility_parameter_3_
 sensibility_parameter_3_
-"Number of persons" "Number of companies" "Exceptional matching" "Matching quality threshold" "Maximum productivity fluctuation" "Firing quality threshold" "Unexpected firing" "Salary maximum fluctuation" "Salary mean" "Unexpected company motivation" "Unexpeted worker motivation" "Number of different skills" "NOTHING"
+"Number of persons" "Number of companies" "Exceptional matching" "Matching quality threshold" "Maximum productivity fluctuation" "Firing quality threshold" "Unexpected firing" "Salary maximum fluctuation" "Unexpected company motivation" "Unexpeted worker motivation" "NOTHING"
 5
 
 INPUTBOX
-470
+476
 502
-560
+566
 562
 min_param_1_
 100.0
@@ -542,20 +599,20 @@ min_param_1_
 Number
 
 INPUTBOX
-564
+569
 502
-650
+655
 562
 max_param_1_
-300.0
+400.0
 1
 0
 Number
 
 INPUTBOX
-654
+660
 502
-740
+746
 562
 step_param_1_
 100.0
@@ -564,9 +621,9 @@ step_param_1_
 Number
 
 INPUTBOX
-471
+478
 572
-561
+568
 632
 min_param_2_
 100.0
@@ -575,20 +632,20 @@ min_param_2_
 Number
 
 INPUTBOX
-565
+571
 572
-652
+658
 632
 max_param_2_
-300.0
+400.0
 1
 0
 Number
 
 INPUTBOX
-655
+661
 572
-741
+747
 632
 step_param_2_
 100.0
@@ -597,9 +654,9 @@ step_param_2_
 Number
 
 INPUTBOX
-472
+481
 640
-560
+569
 700
 min_param_3_
 0.1
@@ -608,9 +665,9 @@ min_param_3_
 Number
 
 INPUTBOX
-565
+571
 641
-652
+658
 701
 max_param_3_
 1.0
@@ -619,9 +676,9 @@ max_param_3_
 Number
 
 INPUTBOX
-656
+662
 641
-742
+748
 701
 step_param_3_
 0.1
@@ -630,10 +687,10 @@ step_param_3_
 Number
 
 SWITCH
-513
-448
-698
-481
+335
+458
+520
+491
 stop_simulations_
 stop_simulations_
 0
@@ -641,10 +698,10 @@ stop_simulations_
 -1000
 
 SLIDER
-692
-101
-827
-134
+135
+498
+257
+531
 time_windows_
 time_windows_
 0
@@ -656,10 +713,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-693
-67
-827
-100
+0
+497
+134
+530
 n_ticks_max_
 n_ticks_max_
 100
@@ -671,10 +728,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-692
-135
-825
-168
+0
+532
+133
+565
 epsilon_
 epsilon_
 0
@@ -685,21 +742,10 @@ epsilon_
 NIL
 HORIZONTAL
 
-MONITOR
-697
-14
-754
-59
-NIL
-Rseed
-2
-1
-11
-
 PLOT
-877
+930
 10
-1365
+1418
 286
 sensitive Beveridge 
 Unemployement rate
@@ -714,25 +760,25 @@ true
 PENS
 
 SLIDER
-693
-170
-826
-203
+135
+533
+254
+566
 n_sub_simu_
 n_sub_simu_
 1
 20
-2.0
+20.0
 1
 1
 NIL
 HORIZONTAL
 
 PLOT
-1069
-492
-1433
-672
+683
+291
+1047
+471
 unemplyment sensitive
 NIL
 NIL
@@ -747,10 +793,10 @@ PENS
 "pen-0" 1.0 0 -13345367 true "" "unemployement_param3\n"
 
 PLOT
-778
-285
-1068
-465
+667
+10
+928
+283
 vacancy sensitive
 NIL
 NIL
@@ -765,10 +811,10 @@ PENS
 "pen-0" 1.0 0 -3844592 true "" "vacancy_param3"
 
 PLOT
-1067
-285
-1436
-493
+1049
+289
+1418
+488
 measures
 NIL
 NIL
@@ -783,16 +829,55 @@ PENS
 "firing_rate" 1.0 0 -5298144 true "" "firing_param3"
 "hiring_rate" 1.0 0 -14439633 true "" "hiring_param3"
 
-MONITOR
-780
-240
-861
-285
-NIL
-firing_rate
-17
-1
+TEXTBOX
+793
+494
+943
+512
+extends(resignation)
 11
+0.0
+1
+
+TEXTBOX
+783
+554
+933
+572
+Perspective (reconversion)
+11
+0.0
+1
+
+TEXTBOX
+260
+499
+483
+541
+variation of n_person for beveridge plot
+11
+0.0
+1
+
+TEXTBOX
+249
+567
+484
+595
+variation of n_company for beveridge plot
+11
+0.0
+1
+
+TEXTBOX
+257
+636
+474
+664
+variation of a parameter of your choice
+11
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?

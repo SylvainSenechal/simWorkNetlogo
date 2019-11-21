@@ -122,18 +122,13 @@ globals[
   vacancy_array_beveridge
   hiring_array_beveridge 
   firing_array_beveridge
-  long_unemployement_array_beveridge  
-  happiness_worker_array_beveridge    
-  happiness_companies_array_beveridge
+  
   
   
  unemployement_array_parameter
  vacancy_array_parameter
  firing_array_parameter
  hiring_array_parameter
- long_unemployement_array_parameter
- happiness_worker_array_parameter
- happiness_companies_array_parameter
   
   index_go
   update_plot
@@ -157,10 +152,10 @@ globals[
   
   Activate_optimized_matching_ ; boolean if we activate the optimzed matching
   M ; for appendice a , the number of couple make / turn
-  Activate_appendice_
+
   Activate_resignation_
   Optimized_resignation_
-  Activate_perspective_
+  Activate_reconversion_
   
 ]
 

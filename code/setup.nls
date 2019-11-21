@@ -129,7 +129,7 @@ globals[
   
   Activate_optimized_matching_ ; boolean if we activate the optimzed matching
   Optimized_resignation_  ; activate or not the resignation question 2.1
-  Activate_perspective_   ; activate or not the perspective // not yet use 
+  Activate_reconversion_   ; activate or not the perspective // not yet use 
   
   
   ;extention of thibaut 

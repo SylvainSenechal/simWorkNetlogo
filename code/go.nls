@@ -6,13 +6,7 @@
 ; Run a sole simulation. Keep calling it if you want several tick to be run.
 to go_simulation
    
-  if too_long? [
-    
-     stop
-    ;; TODO save for bev and plot bev
-   ;; TODO add switch auto_iterate, if true, launch next simulation
-    
-  ]
+ 
   ask persons [
     go_one_person 
   ]
@@ -65,6 +59,11 @@ to go_one_person
 
       optimized_resign    ; for the resignation extention du modéle question 2.1
     ]
+    
+  ]
+  
+  if (Activate_reconversion_ = true) [ ; for the perspective
+    reconversion_person
   ]
   
 end
@@ -87,6 +86,10 @@ to go_one_company
     if (bad_productivity or bad_luck) [
       fire_employee(employee)
     ]
+    
+  ]
+  if (Activate_reconversion_ = true) [ ; for the perspective
+    reconversion_company
   ]
   
 end
@@ -196,7 +199,7 @@ to go_globals
 ;; keep the 20 last measures
   ifelse (ticks > 20) [
     set unemployement_array  lput (unemployment_level / Labor_force) but-first unemployement_array
-    set long_unemployement_array lput  ((count persons with [ time_unemployed >= long_time_unemployed ] ) / Labor_force) but-first long_unemployement_array
+    
     ;set happiness_worker_array lput persons_happiness but-first happiness_worker_array
     ;set happiness_companies_array lput companies_happiness but-first happiness_companies_array
   ]
@@ -206,13 +209,8 @@ to go_globals
   
   ;; for the differents plots
  set unemployement_array  lput ( unemployment_level / Labor_force) unemployement_array
- set long_unemployement_array lput  ((count persons with [ time_unemployed >= long_time_unemployed ] ) / Labor_force)  long_unemployement_array
- ;set happiness_worker_array lput persons_happiness happiness_worker_array
- ;set happiness_companies_array lput companies_happiness happiness_companies_array
-  
-  ]
-  if converge? [
-   ;; TODO same than too_long ? (ie print bev or not ?)
+
+
   ]
   
   
@@ -222,18 +220,42 @@ end
 
       
 
-to-report converge?
-  report False
-end
 
-to-report too_long?
- 
- if (ticks > n_ticks_max) [
-    report True
-  ]
-  report False
+
+to go_simulations
+  
+  while [ticks < max_tick and not hasConverged] [
+        go_simulation
+        
+      ]
+  ask turtles [die] 
+  stop
   
 end
+
+to-report hasConverged
+  ifelse (ticks > time_window)
+  [
+    let vac_mean mean vacancy_rate_list
+    let unemp_mean mean unemployement_rate_list
+    let canConverge True
+    let index 0
+    while [canConverge and index < time_window]
+    [
+      let conv_vac ((abs (item index vacancy_rate_list) - vac_mean) < epsilon)
+      let conv_unemp ((abs (item index unemployement_rate_list) - unemp_mean) < epsilon)
+      set canConverge (conv_vac and conv_unemp)
+      
+    ]
+    show "converge"
+    report canConverge
+  ]
+  [
+    report False
+  ]
+end
+
+
 
 ; si la PERSONS cherche un job ou pas
 to-report seekJob?

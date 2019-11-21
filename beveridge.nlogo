@@ -508,10 +508,10 @@ to setup_globals_simulations
 
   set maxNumberPerson max List 450 100
   set minNumberPerson min List 450 100
-  set stepNumberPerson stepNumberPerson_
+  set stepNumberPerson 50
   set maxNumberCompanies max List 450 100
   set minNumberCompanies min List 450 100
-  set stepNumberCompanies stepNumberCompanies_
+  set stepNumberCompanies 50
   set n_ticks_max n_ticks_max_
   set epsilon epsilon_
 
@@ -621,25 +621,25 @@ ticks
 30.0
 
 SLIDER
-840
-310
-932
-343
+0
+699
+92
+732
 Compagny_Number_
 Compagny_Number_
 0
 500
-344.0
+343.0
 1
 1
 NIL
 HORIZONTAL
 
 BUTTON
-388
-530
-550
-563
+384
+485
+546
+518
 NIL
 setup_simulations
 NIL
@@ -653,10 +653,10 @@ NIL
 1
 
 BUTTON
-388
-566
-549
-599
+385
+523
+546
+556
 NIL
 go_simulations
 NIL
@@ -668,25 +668,6 @@ NIL
 NIL
 NIL
 0
-
-PLOT
-677
-524
-1053
-653
-Stat1
-NIL
-NIL
-0.0
-10.0
-0.0
-10.0
-true
-true
-"" ""
-PENS
-"Unemployed" 1.0 0 -13345367 true "" "plot count persons with [not haveJob]"
-"Vacant job" 1.0 0 -2674135 true "" "plot count companies with [not haveEmployee]"
 
 SLIDER
 11
@@ -779,10 +760,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-5
-635
-285
-668
+3
+545
+239
+578
 unexpected_company_motivation_
 unexpected_company_motivation_
 0
@@ -794,10 +775,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-6
-601
-287
-634
+5
+507
+236
+540
 unexpected_worker_motivation_
 unexpected_worker_motivation_
 0
@@ -854,10 +835,10 @@ NIL
 HORIZONTAL
 
 INPUTBOX
-689
-69
-753
-129
+716
+26
+780
+86
 Rseed
 1.0
 1
@@ -865,10 +846,10 @@ Rseed
 Number
 
 SWITCH
-690
-146
-828
-179
+691
+93
+829
+126
 linksVisible
 linksVisible
 0
@@ -876,10 +857,10 @@ linksVisible
 -1000
 
 SWITCH
-687
-187
-822
-220
+691
+134
+831
+167
 colorVisible
 colorVisible
 1
@@ -887,10 +868,10 @@ colorVisible
 -1000
 
 PLOT
-705
-352
-1050
-518
+919
+214
+1408
+393
 rate
 NIL
 %
@@ -902,14 +883,14 @@ true
 true
 "" ""
 PENS
-"vacancy-rate" 1.0 0 -15390905 true "" "plot vacancy_rate"
+"vacancy_rate" 1.0 0 -15390905 true "" "plot vacancy_rate"
 "unemployment_rate" 1.0 0 -3844592 true "" "plot unemployement_rate"
 
 MONITOR
-711
-736
-800
-781
+731
+223
+820
+268
 vacancy_rate
 vacancy_rate
 17
@@ -917,131 +898,21 @@ vacancy_rate
 11
 
 MONITOR
-807
-736
-938
-781
+712
+273
+843
+318
 unemployement_rate
 unemployement_rate
 17
 1
 11
 
-PLOT
-319
-678
-698
-798
-unemployement
-NIL
-NIL
-0.0
-10.0
-0.0
-10.0
-true
-true
-"" ""
-PENS
-"natural_unemployement" 1.0 0 -16777216 true "" "plot natural_unemployement"
-"structural_unemployement" 1.0 0 -11033397 true "" "plot structural_unemployement"
-"frictional_unemployement" 1.0 0 -2064490 true "" "plot frictional_unemployement_rate"
-
 SLIDER
-1083
-344
-1260
-377
-maxNumberPerson_
-maxNumberPerson_
-0
-1000
-450.0
-50
-1
-NIL
-HORIZONTAL
-
-SLIDER
-1083
-376
-1259
-409
-minNumberPerson_
-minNumberPerson_
-50
-1000
-100.0
-50
-1
-NIL
-HORIZONTAL
-
-SLIDER
-1083
-408
-1258
-441
-stepNumberPerson_
-stepNumberPerson_
-0
-100
-50.0
-10
-1
-NIL
-HORIZONTAL
-
-SLIDER
-1083
-451
-1275
-484
-maxNumberCompanies_
-maxNumberCompanies_
-0
-1000
-450.0
-50
-1
-NIL
-HORIZONTAL
-
-SLIDER
-1083
-483
-1276
-516
-minNumberCompanies_
-minNumberCompanies_
-50
-1000
-100.0
-50
-1
-NIL
-HORIZONTAL
-
-SLIDER
-1082
-516
-1277
-549
-stepNumberCompanies_
-stepNumberCompanies_
-0
-100
-50.0
-10
-1
-NIL
-HORIZONTAL
-
-SLIDER
-1063
-253
-1235
-286
+3
+430
+188
+463
 n_ticks_max_
 n_ticks_max_
 0
@@ -1053,10 +924,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1063
-290
-1235
-323
+4
+469
+187
+502
 epsilon_
 epsilon_
 0
@@ -1068,10 +939,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-1064
-216
-1236
-249
+3
+393
+190
+426
 time_window_
 time_window_
 1
@@ -1083,10 +954,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-836
-263
-928
-296
+121
+712
+213
+745
 Person_number_
 Person_number_
 0
@@ -1098,10 +969,10 @@ NIL
 HORIZONTAL
 
 PLOT
-879
-26
-1166
-203
+916
+10
+1409
+210
 Beveridge curve
 NIL
 NIL
@@ -1116,15 +987,25 @@ PENS
 "BC" 10.0 2 -13345367 true "" "plot_beveridge"
 
 SWITCH
-376
-488
-554
-521
+558
+499
+702
+532
 stop_simulations
 stop_simulations
 0
 1
 -1000
+
+TEXTBOX
+410
+461
+553
+479
+get beveridge plot
+12
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
